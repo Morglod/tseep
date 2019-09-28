@@ -1,7 +1,7 @@
 {
-  "name": "tsee",
-  "version": "1.3.0",
-  "description": "Typed EventEmitter implemented with tsargs",
+  "name": "tseep",
+  "version": "1.0.0",
+  "description": "Typed & optimized EventEmitter implemented with tsargs",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
