@@ -18,9 +18,10 @@ export declare class TaskCollection<Func extends (...args: any) => void, AwaitTa
     call: (...args: Args<Func>) => (AwaitTasks extends true ? Promise<void> : void);
     rebuild: () => void;
     push: (...func: Func[]) => void;
-    remove: (...func: Func[]) => void;
+    /** remove last matched task from tasks */
     removeLast: (func: Func) => void;
     insert: (index: number, ...func: Func[]) => void;
+    setTasks: (tasks: Func[]) => void;
     tasksAsArray: () => Func[];
     /** this autorebuilds */
     readonly clear: typeof clear;

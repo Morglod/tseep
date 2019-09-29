@@ -132,46 +132,6 @@ export function _fast_remove_single(arr: any[], index: number) {
     else arr.splice(index, 1);
 }
 
-function remove_norebuild<Func extends (...args: any) => void>(this: TaskCollection<Func>, a: Func, b?: Func /*, ...func: Func[] */) {
-    // if (this.length === 0) return;
-    // if (b) {
-    //     let rest = [];
-    //     for (var i = 0; i < arguments.length; i++) {
-    //         rest[i] = arguments[i];
-    //     }
-    //     this.tasks = this.tasks.filter(x => !rest.includes(x));
-    // }
-    // else {
-    //     if (this.length === 1) {
-    //         if (this._tasks === a) {
-    //             this.length = 0;
-    //         }
-    //     } else {
-    //         _fast_remove_single(this._tasks as Func[], (this._tasks as Func[]).lastIndexOf(a));
-    //     }
-    // }
-}
-
-function remove_rebuild<Func extends (...args: any) => void>(this: TaskCollection<Func>, a: Func, b?: Func /*, ...func: Func[] */) {
-    // if (this.tasks.length === 0) return;
-    // if (b) {
-    //     let rest = [];
-    //     for (var i = 0; i < arguments.length; i++) {
-    //         rest[i] = arguments[i];
-    //     }
-    //     this.tasks = this.tasks.filter(x => !rest.includes(x));
-    // } else {
-    //     if (this.tasks.length === 1 && this.tasks[0] === a) {
-    //         this.tasks = [];
-    //     } else {
-    //         _fast_remove_single(this.tasks, this.tasks.indexOf(a));
-    //     }
-    // }
-
-    // if (this.firstEmitBuildStrategy) this.call = rebuild_on_first_call;
-    // else this.rebuild();
-}
-
 function removeLast_norebuild<Func extends (...args: any) => void>(this: TaskCollection<Func>, a: Func) {
     if (this.length === 0) return;
     if (this.length === 1) {
@@ -313,9 +273,10 @@ export class TaskCollection<
     rebuild: () => void;
 
     push: (...func: Func[]) => void;
-    remove: (...func: Func[]) => void;
+    /** remove last matched task from tasks */
     removeLast: (func: Func) => void;
     insert: (index: number, ...func: Func[]) => void;
+    setTasks: (tasks: Func[]) => void;
 
     tasksAsArray: () => Func[];
 
@@ -362,12 +323,10 @@ function setAutoRebuild<
 >(this: TaskCollection<Func, AwaitTasks>, newVal: boolean) {
     if (newVal) {
         this.push = push_rebuild.bind(this);
-        this.remove = remove_rebuild.bind(this);
         this.insert = insert_rebuild.bind(this);
         this.removeLast = removeLast_rebuild.bind(this);
     } else {
         this.push = push_norebuild.bind(this);
-        this.remove = remove_norebuild.bind(this);
         this.insert = insert_norebuild.bind(this);
         this.removeLast = removeLast_norebuild.bind(this);
     }
@@ -382,8 +341,29 @@ function tasksAsArray<
     return this._tasks as Func[];
 }
 
+function setTasks<
+    Func extends (...args: any) => void,
+    AwaitTasks extends true|false = false,
+>(this: TaskCollection<Func, AwaitTasks>, tasks: Func[]): void {
+    if (tasks.length === 0) {
+        this.length = 0;
+        this.call = EMPTY_FUNC as any;
+    } else if (tasks.length === 1) {
+        this.length = 1;
+        this.call = tasks[0] as any;
+        this._tasks = tasks[0];
+    } else {
+        this.length = tasks.length;
+        this._tasks = tasks;
+        
+        if (this.firstEmitBuildStrategy) this.call = rebuild_on_first_call as any;
+        else this.rebuild();
+    }
+}
+
 (TaskCollection.prototype as any).fastClear = fastClear as any;
 (TaskCollection.prototype as any).clear = clear as any;
 (TaskCollection.prototype as any).growArgsNum = growArgsNum as any;
 (TaskCollection.prototype as any).setAutoRebuild = setAutoRebuild as any;
 (TaskCollection.prototype as any).tasksAsArray = tasksAsArray as any;
+(TaskCollection.prototype as any).setTasks = setTasks as any;
