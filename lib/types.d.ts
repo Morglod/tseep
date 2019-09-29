@@ -2,7 +2,7 @@
 import { ArgsN } from 'tsargs';
 export declare type Listener = (...args: any[]) => Promise<any> | void;
 export declare type DefaultEventMap = {
-    [event in string | symbol]: Listener;
+    [event in (string | symbol)]: Listener;
 };
 export interface IEventEmitter<EventMap extends DefaultEventMap = DefaultEventMap> {
     emit<EventKey extends keyof EventMap>(event: EventKey, ...args: ArgsN<EventMap[EventKey]>): boolean;

@@ -1,7 +1,7 @@
 import { ArgsN } from 'tsargs';
 
 export type Listener = (...args: any[]) => Promise<any>|void;
-export type DefaultEventMap = { [event in string|symbol]: Listener };
+export type DefaultEventMap = { [event in (string|symbol)]: Listener };
 
 export interface IEventEmitter<EventMap extends DefaultEventMap = DefaultEventMap> {
     emit<EventKey extends keyof EventMap>(

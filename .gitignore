@@ -1,1 +1,4 @@
 /node_modules
+/benchmarks/package-lock.json
+/benchmarks/node_modules
+/coverage

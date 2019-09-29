@@ -1,3 +1,10 @@
 node_modules
 src
 lib/example.*
+benchmarks
+./.vscode
+./jest.config.js
+coverage
+lib/__tests__
+lib/opt-playgroud.*
+lib/example.*

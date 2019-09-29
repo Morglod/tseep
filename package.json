@@ -31,6 +31,9 @@
   },
   "homepage": "https://github.com/Morglod/ts-event-emitter#readme",
   "devDependencies": {
+    "@types/jest": "^24.0.18",
+    "assume": "^2.2.0",
+    "jest": "^24.9.0",
     "typescript": "^3.6.2"
   },
   "dependencies": {
