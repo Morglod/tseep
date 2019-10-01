@@ -123,8 +123,8 @@ function addListener<EventMap extends DefaultEventMap = DefaultEventMap, EventKe
 ): EventEmitter<EventMap> {
     if (typeof listener !== 'function') throw new TypeError('The listener must be a function');
     let evtmap: typeof this.events[EventKey] = this.events[event];
-    if (!evtmap || !(evtmap instanceof TaskCollection)) {
-        evtmap = this.events[event] = new TaskCollection(argsNum, true, listener, false);
+    if (!evtmap) {
+        this.events[event] = new TaskCollection(argsNum, true, listener, false);
         if (typeof event === 'symbol') this._symbolKeys.add(event);
     } else {
         evtmap.push(listener);
