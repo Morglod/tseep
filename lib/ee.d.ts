@@ -7,7 +7,7 @@ export declare class EventEmitter<EventMap extends DefaultEventMap = DefaultEven
         [eventName in keyof EventMap]?: TaskCollection<EventMap[eventName]>;
     };
     onceEvents: {
-        [eventName in keyof EventMap]?: EventMap[eventName][];
+        [eventName in keyof EventMap]?: (EventMap[eventName][]) | EventMap[eventName];
     };
     _symbolKeys: Set<symbol>;
     maxListeners: number;

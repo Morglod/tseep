@@ -41,7 +41,7 @@ Drip:
 fastemitter x 376,473 ops/sec ±3.08% (79 runs sampled)
 event-emitter x 315,167 ops/sec ±0.53% (88 runs sampled)
 contra/emitter x 479,869 ops/sec ±0.46% (90 runs sampled)
-tseep x 6,235,642 ops/sec ±0.42% (87 runs sampled)
+tseep x 9,985,201 ops/sec ±3.34% (86 runs sampled)
 Fastest is tseep
 ```
 
@@ -155,8 +155,8 @@ Drip x 16,668,583 ops/sec ±0.19% (90 runs sampled)
 fastemitter x 11,786,875 ops/sec ±0.78% (86 runs sampled)
 event-emitter x 4,528,121 ops/sec ±0.69% (89 runs sampled)
 contra/emitter x 2,250,594 ops/sec ±0.33% (87 runs sampled)
-tseep x 18,412,470 ops/sec ±0.54% (84 runs sampled)
-Fastest is EventEmitter3
+tseep x 122,151,335 ops/sec ±1.15% (88 runs sampled)
+Fastest is tseep
 ```
 
 Starting benchmark add-remove.js

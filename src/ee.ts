@@ -30,15 +30,23 @@ function emitHasOnce(this: EventEmitter, event: string, a: any, b: any, c: any, 
     }
     const oev = this.onceEvents[event];
     if (oev) {
-        if (oev.length === 0) return false;
-        
-        const fncs = oev;
-        this.onceEvents[event] = [];
+        if (typeof oev === 'function') {
+            this.onceEvents[event] = undefined;
 
-        if (arguments.length < 6) {
-            for (let i = 0; i < fncs.length; ++i) fncs[i](a, b, c, d, e);
+            if (arguments.length < 6) {
+                oev(a, b, c, d, e);
+            } else {
+                oev.apply(undefined, arguments);
+            }
         } else {
-            for (let i = 0; i < fncs.length; ++i) fncs[i].apply(undefined, arguments);
+            const fncs = oev;
+            this.onceEvents[event] = undefined;
+    
+            if (arguments.length < 6) {
+                for (let i = 0; i < fncs.length; ++i) fncs[i](a, b, c, d, e);
+            } else {
+                for (let i = 0; i < fncs.length; ++i) fncs[i].apply(undefined, arguments);
+            }
         }
 
         return true;
@@ -53,7 +61,7 @@ export class EventEmitter<EventMap extends DefaultEventMap = DefaultEventMap> im
     } = {};
 
     onceEvents: {
-        [eventName in keyof EventMap]?: EventMap[eventName][]
+        [eventName in keyof EventMap]?: (EventMap[eventName][]) | EventMap[eventName]
     } = {};
 
     _symbolKeys: Set<symbol> = new Set;
@@ -92,14 +100,18 @@ function once<EventMap extends DefaultEventMap = DefaultEventMap, EventKey exten
         this.emit = emitHasOnce as any;
     }
 
-    let evtmap = this.onceEvents[event];
-    if (!evtmap || typeof evtmap !== 'object') {
-        evtmap = this.onceEvents[event] = [ listener ];
-        if (typeof event === 'symbol') this._symbolKeys.add(event);
-    } else {
-        evtmap.push(listener);
-        if (this.maxListeners !== Infinity && this.maxListeners <= evtmap.length) console.warn(`Maximum event listeners for "${event}" once event!`);
+    switch (typeof this.onceEvents[event]) {
+        case 'undefined':
+            this.onceEvents[event] = listener;
+            if (typeof event === 'symbol') this._symbolKeys.add(event);
+            break;
+        case 'function':
+            this.onceEvents[event] = [ this.onceEvents[event] as any, listener ];
+            break;
+        case 'object':
+            (this.onceEvents[event] as any[]).push(listener);
     }
+
     return this;
 }
 
@@ -129,11 +141,15 @@ function removeListener<EventMap extends DefaultEventMap = DefaultEventMap, Even
     }
     const evto = this.onceEvents[event];
     if (evto) {
-        if (evto.length === 0) return;
-        if (evto.length === 1 && evto[0] === listener) {
-            this.onceEvents[event] = [];
-        } else {
-            _fast_remove_single(evto, evto.lastIndexOf(listener));
+        if (typeof evto === 'function') {
+            this.onceEvents[event] = undefined;
+        }
+        else if (typeof evto === 'object') {
+            if (evto.length === 1 && evto[0] === listener) {
+                this.onceEvents[event] = undefined;
+            } else {
+                _fast_remove_single(evto as any[], (evto as any[]).lastIndexOf(listener));
+            }
         }
     }
     return this;
@@ -169,7 +185,9 @@ function prependOnceListener<EventMap extends DefaultEventMap = DefaultEventMap,
         evtmap = this.onceEvents[event] = [ listener ];
         if (typeof event === 'symbol') this._symbolKeys.add(event);
     } else {
-        evtmap.unshift(listener);
+        // FIXME:
+        throw new Error('FIXME');
+        // evtmap.unshift(listener);
         if (this.maxListeners !== Infinity && this.maxListeners <= evtmap.length) console.warn(`Maximum event listeners for "${event}" once event!`);
     }
 
@@ -201,11 +219,11 @@ function listeners<EventMap extends DefaultEventMap = DefaultEventMap, EventKey 
         if (this.events[event] && this.onceEvents[event]) {
             return [
                 ...this.events[event].tasksAsArray(),
-                ...this.onceEvents[event],
+                ...(typeof this.onceEvents[event] === 'function' ? [ this.onceEvents[event] ] : this.onceEvents[event]) as any,
             ];
         }
         else if (this.events[event]) return this.events[event].tasksAsArray();
-        else if (this.onceEvents[event]) return this.onceEvents[event];
+        else if (this.onceEvents[event]) return (typeof this.onceEvents[event] === 'function' ? [ this.onceEvents[event] ] : this.onceEvents[event]) as any;
         else return [];
     }
 };

@@ -7,6 +7,15 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "inliner",
+            "program": "${workspaceFolder}/lib/inliner.js",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "example",
             "program": "${workspaceFolder}/lib/example.js",
             "outFiles": [
