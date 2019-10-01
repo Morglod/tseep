@@ -26,6 +26,8 @@ var ee1 = new EventEmitter1()
 
 [ee1, ee2, ee3, drip, ee, ce, tsee, tseep].forEach(function ohai(emitter) {
   emitter.on('foo', handle);
+  if (emitter.removeListener) emitter.removeListener('foo', handle);
+  else if (emitter.off) emitter.off('foo', handle);
 
   //
   // We add and remove a listener to see if the event emitter implementation is
@@ -43,7 +45,8 @@ var ee1 = new EventEmitter1()
 
 (
   new benchmark.Suite()
-).add('EventEmitter1', function() {
+)
+.add('EventEmitter1', function() {
   ee1.emit('foo');
   ee1.emit('foo', 'bar');
   ee1.emit('foo', 'bar', 'baz');
@@ -78,12 +81,14 @@ var ee1 = new EventEmitter1()
   tsee.emit('foo', 'bar');
   tsee.emit('foo', 'bar', 'baz');
   tsee.emit('foo', 'bar', 'baz', 'boom');
-}).add('tseep', function() {
+})
+.add('tseep', function() {
   tseep.emit('foo');
   tseep.emit('foo', 'bar');
   tseep.emit('foo', 'bar', 'baz');
   tseep.emit('foo', 'bar', 'baz', 'boom');
-}).on('cycle', function cycle(e) {
+})
+.on('cycle', function cycle(e) {
   console.log(e.target.toString());
 }).on('complete', function completed() {
   console.log('Fastest is %s', this.filter('fastest').map('name'));
