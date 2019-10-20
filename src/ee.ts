@@ -1,6 +1,7 @@
 import { DefaultEventMap, IEventEmitter } from './index';
 import { ArgsN, ArgsNum } from 'tsargs';
 import { TaskCollection, _fast_remove_single } from './task-collection';
+import { nullObj } from './utils';
 
 function emit(this: EventEmitter, event: string, a: any, b: any, c: any, d: any, e: any) {
     const ev = this.events[event];
@@ -58,11 +59,11 @@ function emitHasOnce(this: EventEmitter, event: string, a: any, b: any, c: any, 
 export class EventEmitter<EventMap extends DefaultEventMap = DefaultEventMap> implements IEventEmitter<EventMap> {
     events: {
         [eventName in keyof EventMap]?: TaskCollection<EventMap[eventName]>
-    } = {};
+    } = nullObj();
 
     onceEvents: {
         [eventName in keyof EventMap]?: (EventMap[eventName][]) | EventMap[eventName]
-    } = {};
+    } = nullObj();
 
     _symbolKeys: Set<symbol> = new Set;
 
@@ -132,7 +133,7 @@ function addListener<EventMap extends DefaultEventMap = DefaultEventMap, EventKe
         if (this.maxListeners !== Infinity && this.maxListeners <= evtmap.length) console.warn(`Maximum event listeners for "${event}" event!`);
     }
     return this;
-};
+}
 
 function removeListener<EventMap extends DefaultEventMap = DefaultEventMap, EventKey extends keyof EventMap = string>(this: EventEmitter<EventMap>,event: EventKey, listener: EventMap[EventKey]): EventEmitter<EventMap> {
     const evt = this.events[event];
@@ -153,10 +154,12 @@ function removeListener<EventMap extends DefaultEventMap = DefaultEventMap, Even
         }
     }
     return this;
-};
+}
+
 function hasListeners<EventMap extends DefaultEventMap = DefaultEventMap, EventKey extends keyof EventMap = string>(this: EventEmitter<EventMap>,event: EventKey) {
     return this.events[event] && !!this.events[event].length;
-};
+}
+
 function prependListener<EventMap extends DefaultEventMap = DefaultEventMap, EventKey extends keyof EventMap = string>(
     this: EventEmitter<EventMap>,
     event: EventKey,
@@ -174,7 +177,8 @@ function prependListener<EventMap extends DefaultEventMap = DefaultEventMap, Eve
         if (this.maxListeners !== Infinity && this.maxListeners <= evtmap.length) console.warn(`Maximum event listeners for "${event}" event!`);
     }
     return this;
-};
+}
+
 function prependOnceListener<EventMap extends DefaultEventMap = DefaultEventMap, EventKey extends keyof EventMap = string>(this: EventEmitter<EventMap>,event: EventKey, listener: EventMap[EventKey]): EventEmitter<EventMap> {
     if (this.emit as any === emit) {
         this.emit = emitHasOnce as any;
@@ -192,12 +196,12 @@ function prependOnceListener<EventMap extends DefaultEventMap = DefaultEventMap,
     }
 
     return this;
-};
+}
 
 function removeAllListeners<EventMap extends DefaultEventMap = DefaultEventMap, EventKey extends keyof EventMap = string>(this: EventEmitter<EventMap>, event?: EventKey): EventEmitter<EventMap> {
     if (event === undefined) {
-        this.events = {};
-        this.onceEvents = {};
+        this.events = nullObj();
+        this.onceEvents = nullObj();
         this._symbolKeys = new Set;
     } else {
         this.events[event] = undefined;
@@ -205,14 +209,17 @@ function removeAllListeners<EventMap extends DefaultEventMap = DefaultEventMap, 
         if (typeof event === 'symbol') this._symbolKeys.delete(event);
     }
     return this;
-};
+}
+
 function setMaxListeners<EventMap extends DefaultEventMap = DefaultEventMap>(this: EventEmitter<EventMap>,n: number): EventEmitter<EventMap> {
     this.maxListeners = n;
     return this;
-};
+}
+
 function getMaxListeners<EventMap extends DefaultEventMap = DefaultEventMap>(this: EventEmitter<EventMap>): number {
     return this.maxListeners;
-};
+}
+
 function listeners<EventMap extends DefaultEventMap = DefaultEventMap, EventKey extends keyof EventMap = string>(this: EventEmitter<EventMap>, event: EventKey): EventMap[EventKey][] {
     if (this.emit === (emit as any)) return this.events[event] ? (this.events[event].tasksAsArray().slice() as any[]) : [];
     else {
@@ -226,7 +233,8 @@ function listeners<EventMap extends DefaultEventMap = DefaultEventMap, EventKey 
         else if (this.onceEvents[event]) return (typeof this.onceEvents[event] === 'function' ? [ this.onceEvents[event] ] : this.onceEvents[event]) as any;
         else return [];
     }
-};
+}
+
 function eventNames<EventMap extends DefaultEventMap = DefaultEventMap>(this: EventEmitter<EventMap>): Array<string | symbol> {
     if (this.emit === (emit as any)) {
         const keys = Object.keys(this.events);
@@ -240,11 +248,12 @@ function eventNames<EventMap extends DefaultEventMap = DefaultEventMap>(this: Ev
             ((x in this.onceEvents) && this.onceEvents[x] && this.onceEvents[x].length)
         )) ];
     }
-};
+}
+
 function listenerCount<EventMap extends DefaultEventMap = DefaultEventMap, EventKey extends keyof EventMap = string>(this: EventEmitter<EventMap>, type: EventKey): number {
     if (this.emit === (emit as any)) return this.events[type] && this.events[type].length || 0;
     else return (this.events[type] && this.events[type].length || 0) + (this.onceEvents[type] && this.onceEvents[type].length || 0);
-};
+}
 
 EventEmitter.prototype.emit = emit as any;
 EventEmitter.prototype.on = addListener;

@@ -1,3 +1,7 @@
-export type NoReadonly<T extends { [x: string]: any }> = {
-    -readonly [X in keyof T]: T[X]
-};
+
+export function nullObj() {
+    const x = {};
+    (x as any).__proto__ = null;
+    (x as any).prototype = null;
+    return x;
+}

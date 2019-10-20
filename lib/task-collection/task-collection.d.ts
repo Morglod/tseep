@@ -1,6 +1,4 @@
 import { ArgsNum, Args } from 'tsargs';
-export declare function bakeCollection<Func extends (...args: any) => void>(collection: Func[], fixedArgsNum: ArgsNum<Func>): (...args: Args<Func>) => void;
-export declare function bakeCollectionAwait<Func extends (...args: any) => void>(collection: Func[], fixedArgsNum: ArgsNum<Func>): (...args: Args<Func>) => Promise<void>;
 export declare function _fast_remove_single(arr: any[], index: number): void;
 export declare class TaskCollection<Func extends (...args: any) => void, AwaitTasks extends true | false = false> {
     readonly awaitTasks: AwaitTasks;

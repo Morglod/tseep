@@ -1,63 +1,6 @@
 import { ArgsNum, Args } from 'tsargs';
 import { NoReadonly } from './utils';
-
-const EMPTY_FUNC = (function(){});
-
-export function bakeCollection<Func extends (...args: any) => void>(
-    collection: Func[],
-    fixedArgsNum: ArgsNum<Func>,
-): (...args: Args<Func>) => void {
-    if (collection.length === 0) return EMPTY_FUNC;
-    else if (collection.length === 1) return collection[0];
-
-    let funcFactoryCode: string;
-
-    {
-        const argsDefCode = Array.from({ length: fixedArgsNum}).map((_, i) => `arg${i}`).join(', ');
-        const funcDefCode = collection.map((_, i) => `var f${i} = collection[${i}];`).join('\n');
-        const funcCallCode = collection.map((_, i) => `f${i}(${argsDefCode})`).join('\n');
-
-        funcFactoryCode = `(function() {
-            ${funcDefCode}
-            return (function(${argsDefCode}) {
-                ${funcCallCode}
-            });
-        })`;
-    }
-
-    // isolate eval
-    const bakeCollection = undefined;
-    const funcFactory = eval(funcFactoryCode);
-    return funcFactory();
-}
-
-export function bakeCollectionAwait<Func extends (...args: any) => void>(
-    collection: Func[],
-    fixedArgsNum: ArgsNum<Func>,
-): (...args: Args<Func>) => Promise<void> {
-    if (collection.length === 0) return EMPTY_FUNC as any;
-    else if (collection.length === 1) return collection[0] as any;
-    
-    let funcFactoryCode: string;
-
-    {
-        const argsDefCode = Array.from({ length: fixedArgsNum}).map((_, i) => `arg${i}`).join(', ');
-        const funcDefCode = collection.map((_, i) => `var f${i} = collection[${i}];`).join('\n');
-        const funcCallCode = collection.map((_, i) => `f${i}(${argsDefCode})`).join(', ');
-
-        funcFactoryCode = `(function() {
-            ${funcDefCode}
-            return (function(${argsDefCode}) {
-                return Promise.all([ ${funcCallCode} ]);
-            });
-        })`;
-    }
-
-    // isolate eval
-    const bakeCollection = undefined;
-    const funcFactory = eval(funcFactoryCode);
-    return funcFactory();
-}
+import { bakeCollection, bakeCollectionAwait, BAKED_EMPTY_FUNC } from './bake-collection';
 
 function push_norebuild<Func extends (...args: any) => void>(this: TaskCollection<Func>, a: Func, b?: Func /*, ...func: Func[] */) {
     const len = this.length;
@@ -155,6 +98,13 @@ function removeLast_rebuild<Func extends (...args: any) => void>(this: TaskColle
         if (this._tasks === a) {
             this.length = 0;
         }
+        if (this.firstEmitBuildStrategy) {
+            this.call = BAKED_EMPTY_FUNC;
+            return;
+        } else {
+            this.rebuild();
+            return;
+        }
     } else {
         _fast_remove_single(this._tasks as Func[], (this._tasks as Func[]).lastIndexOf(a));
         if (this._tasks.length === 1) {
@@ -164,7 +114,7 @@ function removeLast_rebuild<Func extends (...args: any) => void>(this: TaskColle
         else this.length = this._tasks.length;
     }
 
-    if (this.firstEmitBuildStrategy)this.call = rebuild_on_first_call;
+    if (this.firstEmitBuildStrategy) this.call = rebuild_on_first_call;
     else this.rebuild();
 }
 
@@ -204,13 +154,13 @@ function insert_rebuild<Func extends (...args: any) => void>(this: TaskCollectio
 }
 
 function rebuild_noawait<Func extends (...args: any) => void>(this: TaskCollection<Func>) {
-    if (this.length === 0) this.call = EMPTY_FUNC;
+    if (this.length === 0) this.call = BAKED_EMPTY_FUNC;
     else if (this.length === 1) this.call = this._tasks as Func;
     else this.call = bakeCollection(this._tasks as Func[], this.argsNum);
 }
 
 function rebuild_await<Func extends (...args: any) => void>(this: TaskCollection<Func>) {
-    if (this.length === 0) this.call = EMPTY_FUNC;
+    if (this.length === 0) this.call = BAKED_EMPTY_FUNC;
     else if (this.length === 1) this.call = this._tasks as Func;
     else this.call = bakeCollectionAwait(this._tasks as Func[], this.argsNum);
 }
@@ -269,7 +219,7 @@ export class TaskCollection<
     readonly growArgsNum: typeof growArgsNum;
     setAutoRebuild: typeof setAutoRebuild;
 
-    call: (...args: Args<Func>) => (AwaitTasks extends true ? Promise<void> : void) = EMPTY_FUNC as any;
+    call: (...args: Args<Func>) => (AwaitTasks extends true ? Promise<void> : void) = BAKED_EMPTY_FUNC as any;
 
     rebuild: () => void;
 
@@ -294,7 +244,7 @@ function fastClear<
 >(this: TaskCollection<Func, AwaitTasks>) {
     this._tasks = null;
     this.length = 0;
-    this.call = EMPTY_FUNC as any;
+    this.call = BAKED_EMPTY_FUNC as any;
 }
 
 function clear<
@@ -303,7 +253,7 @@ function clear<
 >(this: TaskCollection<Func, AwaitTasks>) {
     this._tasks = null;
     this.length = 0;
-    this.call = EMPTY_FUNC as any;
+    this.call = BAKED_EMPTY_FUNC as any;
 }
 
 function growArgsNum<
@@ -348,7 +298,7 @@ function setTasks<
 >(this: TaskCollection<Func, AwaitTasks>, tasks: Func[]): void {
     if (tasks.length === 0) {
         this.length = 0;
-        this.call = EMPTY_FUNC as any;
+        this.call = BAKED_EMPTY_FUNC as any;
     } else if (tasks.length === 1) {
         this.length = 1;
         this.call = tasks[0] as any;
