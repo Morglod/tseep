@@ -1,9 +1,9 @@
-# tseep
+# tseo
 
-Optimizied tsee
-
-Typed EventEmitter implemented with [tsargs](https://www.npmjs.com/package/tsargs), based on nodejs EventEmitter.  
-Fully implements `NodeJS.EventEmitter` type, provides interface & proxy class.
+* Strict event types
+* Fully implements `NodeJS.EventEmitter` type & standart, provides interface
+* Worlds fastest pure-js EventEmitter
+* Fully tested with eventemitter3 tests
 
 ## Install & use
 

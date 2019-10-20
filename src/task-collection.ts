@@ -1,4 +1,5 @@
 import { ArgsNum, Args } from 'tsargs';
+import { NoReadonly } from './utils';
 
 const EMPTY_FUNC = (function(){});
 
@@ -361,9 +362,9 @@ function setTasks<
     }
 }
 
-(TaskCollection.prototype as any).fastClear = fastClear as any;
-(TaskCollection.prototype as any).clear = clear as any;
-(TaskCollection.prototype as any).growArgsNum = growArgsNum as any;
-(TaskCollection.prototype as any).setAutoRebuild = setAutoRebuild as any;
-(TaskCollection.prototype as any).tasksAsArray = tasksAsArray as any;
-(TaskCollection.prototype as any).setTasks = setTasks as any;
+(TaskCollection.prototype as NoReadonly<TaskCollection<any, any>>).fastClear = fastClear;
+(TaskCollection.prototype as NoReadonly<TaskCollection<any, any>>).clear = clear;
+(TaskCollection.prototype as NoReadonly<TaskCollection<any, any>>).growArgsNum = growArgsNum;
+(TaskCollection.prototype as NoReadonly<TaskCollection<any, any>>).setAutoRebuild = setAutoRebuild;
+(TaskCollection.prototype as NoReadonly<TaskCollection<any, any>>).tasksAsArray = tasksAsArray;
+(TaskCollection.prototype as NoReadonly<TaskCollection<any, any>>).setTasks = setTasks;

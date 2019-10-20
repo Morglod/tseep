@@ -1,5 +1,5 @@
 {
-  "name": "tseep",
+  "name": "tseo",
   "version": "1.0.0",
   "description": "Typed & optimized EventEmitter implemented with tsargs",
   "main": "lib/index.js",
