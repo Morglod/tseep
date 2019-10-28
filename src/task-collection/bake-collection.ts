@@ -27,13 +27,56 @@ export function bakeCollection<Func extends (...args: any) => void>(
         })`;
     } else {
         const argsDefCode = Array.from({ length: fixedArgsNum}).map((_, i) => `arg${i}`).join(', ');
-        funcFactoryCode = `(function(collection) {
-            return (function(${argsDefCode}) {
-                for (var i = 0; i < collection.length; ++i) {
-                    collection[i](${argsDefCode});
-                }
-            });
-        })`;
+
+        // loop unroll
+        
+        if (collection.length % 10 === 0) {
+            funcFactoryCode = `(function(collection) {
+                return (function(${argsDefCode}) {
+                    for (var i = 0; i < collection.length; i += 10) {
+                        collection[i](${argsDefCode});
+                        collection[i+1](${argsDefCode});
+                        collection[i+2](${argsDefCode});
+                        collection[i+3](${argsDefCode});
+                        collection[i+4](${argsDefCode});
+                        collection[i+5](${argsDefCode});
+                        collection[i+6](${argsDefCode});
+                        collection[i+7](${argsDefCode});
+                        collection[i+8](${argsDefCode});
+                        collection[i+9](${argsDefCode});
+                    }
+                });
+            })`;
+        } else if (collection.length % 4 === 0) {
+            funcFactoryCode = `(function(collection) {
+                return (function(${argsDefCode}) {
+                    for (var i = 0; i < collection.length; i += 4) {
+                        collection[i](${argsDefCode});
+                        collection[i+1](${argsDefCode});
+                        collection[i+2](${argsDefCode});
+                        collection[i+3](${argsDefCode});
+                    }
+                });
+            })`;
+        } else if (collection.length % 3 === 0) {
+            funcFactoryCode = `(function(collection) {
+                return (function(${argsDefCode}) {
+                    for (var i = 0; i < collection.length; i += 3) {
+                        collection[i](${argsDefCode});
+                        collection[i+1](${argsDefCode});
+                        collection[i+2](${argsDefCode});
+                    }
+                });
+            })`;
+        } else {
+            funcFactoryCode = `(function(collection) {
+                return (function(${argsDefCode}) {
+                    for (var i = 0; i < collection.length; ++i) {
+                        collection[i](${argsDefCode});
+                    }
+                });
+            })`;
+        }
     }
 
     {
