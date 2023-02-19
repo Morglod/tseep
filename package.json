@@ -1,6 +1,6 @@
 {
   "name": "tseep",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fastest event emitter in the world",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
