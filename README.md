@@ -18,6 +18,8 @@ dont afraid it, all js engines use it lol.
 
 ## Benchmarks
 
+[emit-multiple-listeners](./benchmarks/run/emit-multiple-listeners.js)
+
 ```
 EventEmitter1 x     4,498,223 ops/sec
 EventEmitter2 x     4,536,296 ops/sec
