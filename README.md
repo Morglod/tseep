@@ -1,3 +1,5 @@
+[![NPM Version](https://badge.fury.io/js/tseep.svg?style=flat)](https://www.npmjs.com/package/tseep)
+
 # tseep
 
 Because there are N fastest event emitters. And we are fastest (feb 2023) 😏.
