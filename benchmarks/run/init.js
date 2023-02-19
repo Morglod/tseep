@@ -10,7 +10,9 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , EE = require('event-emitter')
   , FE = require('fastemitter')
   , TSEE = require('tsee')
-  , TSEEP = require('../../lib');
+  , TSEEP = require('../../lib')
+  , Emitix = require('emitix').default
+;
 
 //
 // This is used to prevent the functions below from being transformed into
@@ -38,6 +40,8 @@ var emitter;
   emitter = new TSEE.EventEmitter();
 }).add('tseep', function() {
   emitter = new TSEEP.EventEmitter();
+}).add('emitix', function() {
+  emitter = new Emitix();
 }).on('cycle', function cycle(e) {
   console.log(e.target.toString());
 }).on('complete', function completed() {

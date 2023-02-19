@@ -10,7 +10,9 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , EE = require('event-emitter')
   , FE = require('fastemitter')
   , TSEE = require('tsee')
-  , TSEEP = require('../../lib');
+  , TSEEP = require('../../lib')
+  , Emitix = require('emitix').default
+;
 
 var ctx = { foo: 'bar' };
 
@@ -27,7 +29,9 @@ var ee1 = new EventEmitter1()
   , ce = CE()
   , tsee = new TSEE.EventEmitter()
   , tseep = new TSEEP.EventEmitter()
-  , ee = EE();
+  , ee = EE()
+  , emitix = new Emitix()
+;
 
 ee3.on('foo', handle, ctx);
 ee2.on('foo', handle.bind(ctx));
@@ -38,6 +42,8 @@ fe.on('foo', handle.bind(ctx));
 ce.on('foo', handle.bind(ctx));
 tsee.on('foo', handle.bind(ctx));
 tseep.on('foo', handle.bind(ctx));
+emitix.on('foo', handle.bind(ctx));
+
 (
   new benchmark.Suite()
 ).add('EventEmitter1', function() {
@@ -85,6 +91,11 @@ tseep.on('foo', handle.bind(ctx));
   tseep.emit('foo', 'bar');
   tseep.emit('foo', 'bar', 'baz');
   tseep.emit('foo', 'bar', 'baz', 'boom');
+}).add('emitix', function() {
+  emitix.emit('foo');
+  emitix.emit('foo', 'bar');
+  emitix.emit('foo', 'bar', 'baz');
+  emitix.emit('foo', 'bar', 'baz', 'boom');
 }).on('cycle', function cycle(e) {
   console.log(e.target.toString());
 }).on('complete', function completed() {

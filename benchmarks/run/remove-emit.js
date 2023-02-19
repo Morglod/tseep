@@ -9,7 +9,9 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , CE = require('contra/emitter')
   , EE = require('event-emitter')
   , TSEE = require('tsee')
-  , TSEEP = require('../../lib');
+  , TSEEP = require('../../lib')
+  , Emitix = require('emitix').default
+;
 
 function handle() {
   if (arguments.length > 100) console.log('damn');
@@ -22,9 +24,11 @@ var ee1 = new EventEmitter1()
   , ce = CE()
   , tsee = new TSEE.EventEmitter()
   , tseep = new TSEEP.EventEmitter()
-  , ee = EE();
+  , ee = EE()
+  , emitix = new Emitix()
+;
 
-[ee1, ee2, ee3, drip, ee, ce, tsee, tseep].forEach(function ohai(emitter) {
+[ee1, ee2, ee3, drip, ee, ce, tsee, tseep, emitix].forEach(function ohai(emitter) {
   emitter.on('foo', handle);
   if (emitter.removeListener) emitter.removeListener('foo', handle);
   else if (emitter.off) emitter.off('foo', handle);
@@ -87,6 +91,12 @@ var ee1 = new EventEmitter1()
   tseep.emit('foo', 'bar');
   tseep.emit('foo', 'bar', 'baz');
   tseep.emit('foo', 'bar', 'baz', 'boom');
+})
+.add('emitix', function() {
+  emitix.emit('foo');
+  emitix.emit('foo', 'bar');
+  emitix.emit('foo', 'bar', 'baz');
+  emitix.emit('foo', 'bar', 'baz', 'boom');
 })
 .on('cycle', function cycle(e) {
   console.log(e.target.toString());

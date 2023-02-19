@@ -1,7 +1,7 @@
 {
-  "name": "tseo",
+  "name": "tseep",
   "version": "1.0.0",
-  "description": "Typed & optimized EventEmitter implemented with tsargs",
+  "description": "Fastest event emitter in the world",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Morglod/ts-event-emitter.git"
+    "url": "git+https://github.com/Morglod/tseep.git"
   },
   "keywords": [
     "types",
@@ -27,9 +27,9 @@
   "author": "morglod",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Morglod/ts-event-emitter/issues"
+    "url": "https://github.com/Morglod/tseep/issues"
   },
-  "homepage": "https://github.com/Morglod/ts-event-emitter#readme",
+  "homepage": "https://github.com/Morglod/tseep#readme",
   "devDependencies": {
     "@types/jest": "^24.0.18",
     "assume": "^2.2.0",

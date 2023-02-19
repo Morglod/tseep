@@ -10,7 +10,9 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , EE = require('event-emitter')
   , FE = require('fastemitter')
   , TSEE = require('tsee')
-  , TSEEP = require('../../lib');
+  , TSEEP = require('../../lib')
+  , Emitix = require('emitix').default
+;
 
 function foo() {
   if (arguments.length > 100) console.log('damn');
@@ -27,6 +29,7 @@ var ee1 = new EventEmitter1()
   , tsee = new TSEE.EventEmitter()
   , tseep = new TSEEP.EventEmitter()
   , ee = EE()
+  , emitix = new Emitix()
   , j, i;
 
 for (i = 0; i < 10; i++) {
@@ -40,6 +43,7 @@ for (i = 0; i < 10; i++) {
     drip.on('event:' + i, foo);
     tsee.on('event:' + i, foo);
     tseep.on('event:' + i, foo);
+    emitix.on('event:' + i, foo);
   }
 }
 
@@ -80,6 +84,10 @@ for (i = 0; i < 10; i++) {
 }).add('tseep', function() {
   for (i = 0; i < 10; i++) {
     tseep.emit('event:' + i);
+  }
+}).add('emitix', function() {
+  for (i = 0; i < 10; i++) {
+    emitix.emit('event:' + i);
   }
 }).on('cycle', function cycle(e) {
   console.log(e.target.toString());

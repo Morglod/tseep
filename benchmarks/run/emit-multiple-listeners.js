@@ -9,7 +9,9 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , EE = require('event-emitter')
   , FE = require('fastemitter')
   , TSEE = require('tsee')
-  , TSEEP = require('../../lib');
+  , TSEEP = require('../../lib')
+  , Emitix = require('emitix').default
+;
 
 function foo(a,b,c,d) {
   if (arguments.length > 100) console.log('damn');
@@ -36,7 +38,9 @@ var ee1 = new EventEmitter1()
   , ce = CE()
   , tsee = new TSEE.EventEmitter()
   , tseep = new TSEEP.EventEmitter()
-  , ee = EE();
+  , ee = EE()
+  , eix = new Emitix()
+;
 
 ce.on('foo', foo).on('foo', bar).on('foo', baz);
 ee.on('foo', foo).on('foo', bar).on('foo', baz);
@@ -44,6 +48,7 @@ fe.on('foo', foo).on('foo', bar).on('foo', baz);
 ee3.on('foo', foo).on('foo', bar).on('foo', baz);
 ee2.on('foo', foo).on('foo', bar).on('foo', baz);
 ee1.on('foo', foo).on('foo', bar).on('foo', baz);
+eix.on('foo', foo); eix.on('foo', bar); eix.on('foo', baz);
 
 tsee.on('foo', foo).on('foo', bar).on('foo', baz);
 tseep.on('foo', foo).on('foo', bar).on('foo', baz);
@@ -95,6 +100,11 @@ tseep.on('foo', foo).on('foo', bar).on('foo', baz);
   tseep.emit('foo', 'bar');
   tseep.emit('foo', 'bar', 'baz');
   tseep.emit('foo', 'bar', 'baz', 'boom');
+}).add('emitix', function() {
+  eix.emit('foo');
+  eix.emit('foo', 'bar');
+  eix.emit('foo', 'bar', 'baz');
+  eix.emit('foo', 'bar', 'baz', 'boom');
 }).on('cycle', function cycle(e) {
   console.log(e.target.toString());
 }).on('complete', function completed() {
