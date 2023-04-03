@@ -10,11 +10,10 @@ Up to **x12** faster than `eventemitter3` in terms of "classic api event emitter
 
 -   Fully typed args of `emit` method based on events map
 -   Fully implements `NodeJS.EventEmitter` type & standart, provides interface
--   Worlds fastest pure-js EventEmitter`
+-   Worlds fastest pure-js `EventEmitter`
 -   Fully tested with eventemitter3 tests
 
-PS Uses `eval` for runtime codegenerations;  
-dont afraid it, all js engines use it lol.
+> PS Uses `eval` for runtime codegenerations; don't be afraid of it, all JS engines use it lol.
 
 [how it works](./docs/how_it_works_en.md)
 
