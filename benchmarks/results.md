@@ -1,182 +1,193 @@
 Starting benchmark emit-multiple-listeners.js
 
 ```
-EventEmitter1 x 4,498,223 ops/sec ±0.92% (99 runs sampled)
-EventEmitter2 x 4,536,296 ops/sec ±0.36% (95 runs sampled)
-EventEmitter3 x 5,852,395 ops/sec ±0.29% (93 runs sampled)
-fastemitter x 6,127,215 ops/sec ±0.17% (97 runs sampled)
-event-emitter x 3,449,595 ops/sec ±0.29% (97 runs sampled)
-contra/emitter x 2,186,002 ops/sec ±0.38% (87 runs sampled)
-tsee x 5,231,167 ops/sec ±0.13% (99 runs sampled)
-tseep x 40,569,711 ops/sec ±0.12% (98 runs sampled)
-emitix x 6,549,983 ops/sec ±0.10% (102 runs sampled)
+EventEmitter1 x 4,586,295 ops/sec ±0.53% (95 runs sampled)
+EventEmitter2 x 4,619,034 ops/sec ±0.59% (99 runs sampled)
+EventEmitter3 x 5,918,681 ops/sec ±0.18% (92 runs sampled)
+Drip: 
+fastemitter x 6,092,914 ops/sec ±0.28% (100 runs sampled)
+event-emitter x 3,567,456 ops/sec ±0.35% (99 runs sampled)
+contra/emitter x 2,148,965 ops/sec ±0.46% (99 runs sampled)
+tsee x 5,173,137 ops/sec ±0.44% (99 runs sampled)
+tseep x 40,511,592 ops/sec ±0.15% (95 runs sampled)
+emitix x 6,515,426 ops/sec ±0.21% (99 runs sampled)
+mitt x 4,303,288 ops/sec ±0.26% (99 runs sampled)
 Fastest is [ 'tseep' ]
 ```
 
 Starting benchmark emit-multi.js
 
 ```
-EventEmitter1 x 27,884,147 ops/sec ±0.35% (99 runs sampled)
-EventEmitter2 x 11,516,106 ops/sec ±0.29% (94 runs sampled)
-EventEmitter3 x 13,743,464 ops/sec ±0.15% (94 runs sampled)
-Drip x 12,178,762 ops/sec ±0.15% (100 runs sampled)
-fastemitter x 10,699,141 ops/sec ±0.13% (96 runs sampled)
-event-emitter x 9,089,229 ops/sec ±0.22% (98 runs sampled)
-contra/emitter x 3,430,831 ops/sec ±0.15% (98 runs sampled)
-tsee x 9,279,770 ops/sec ±0.13% (98 runs sampled)
-tseep x 155,550,757 ops/sec ±0.10% (94 runs sampled)
-emitix x 816,706 ops/sec ±0.11% (98 runs sampled)
+EventEmitter1 x 28,217,898 ops/sec ±0.15% (96 runs sampled)
+EventEmitter2 x 11,307,372 ops/sec ±0.49% (98 runs sampled)
+EventEmitter3 x 12,759,365 ops/sec ±0.41% (99 runs sampled)
+Drip x 11,839,258 ops/sec ±0.39% (93 runs sampled)
+fastemitter x 10,532,420 ops/sec ±0.37% (96 runs sampled)
+event-emitter x 9,024,549 ops/sec ±0.36% (95 runs sampled)
+contra/emitter x 3,430,620 ops/sec ±0.29% (95 runs sampled)
+tsee x 9,312,531 ops/sec ±0.20% (99 runs sampled)
+tseep x 155,087,077 ops/sec ±0.16% (98 runs sampled)
+emitix x 816,219 ops/sec ±0.34% (93 runs sampled)
+mitt x 14,108,761 ops/sec ±0.35% (94 runs sampled)
 Fastest is [ 'tseep' ]
 ```
 
 Starting benchmark once-multi.js
 
 ```
-EventEmitter1 x 1,570,837 ops/sec ±0.57% (98 runs sampled)
-EventEmitter2 x 1,140,453 ops/sec ±0.16% (94 runs sampled)
-EventEmitter3 x 5,343,315 ops/sec ±0.13% (100 runs sampled)
+EventEmitter1 x 1,614,875 ops/sec ±0.49% (94 runs sampled)
+EventEmitter2 x 1,141,795 ops/sec ±0.25% (96 runs sampled)
+EventEmitter3 x 5,328,624 ops/sec ±0.35% (100 runs sampled)
 Drip: 
-fastemitter x 1,331,279 ops/sec ±0.10% (95 runs sampled)
-event-emitter x 738,330 ops/sec ±0.10% (98 runs sampled)
-contra/emitter x 1,922,769 ops/sec ±0.20% (99 runs sampled)
-tseep x 17,608,398 ops/sec ±0.15% (98 runs sampled)
-emitix x 2,825,589 ops/sec ±0.10% (101 runs sampled)
+fastemitter x 1,339,102 ops/sec ±0.17% (99 runs sampled)
+event-emitter x 739,011 ops/sec ±0.31% (92 runs sampled)
+contra/emitter x 1,966,692 ops/sec ±0.26% (98 runs sampled)
+tseep x 17,844,717 ops/sec ±0.29% (96 runs sampled)
+emitix x 2,825,309 ops/sec ±0.40% (93 runs sampled)
+mitt: 
 Fastest is [ 'tseep' ]
 ```
 
 Starting benchmark emit-empty.js
 
 ```
-EventEmitter1 x 31,966,161 ops/sec ±0.14% (98 runs sampled)
-EventEmitter2 x 46,866,294 ops/sec ±0.12% (100 runs sampled)
-EventEmitter3 x 83,797,895 ops/sec ±0.51% (98 runs sampled)
-Drip x 62,828,976 ops/sec ±0.07% (100 runs sampled)
-fastemitter x 79,597,685 ops/sec ±0.23% (101 runs sampled)
-event-emitter x 35,108,297 ops/sec ±0.09% (96 runs sampled)
-contra/emitter x 3,445,635 ops/sec ±0.19% (97 runs sampled)
-tsee x 23,574,106 ops/sec ±0.39% (91 runs sampled)
-tseep x 1,022,001,464 ops/sec ±0.08% (100 runs sampled)
-emitix x 126,173,502 ops/sec ±0.17% (99 runs sampled)
+EventEmitter1 x 32,205,058 ops/sec ±0.19% (95 runs sampled)
+EventEmitter2 x 47,209,928 ops/sec ±0.31% (95 runs sampled)
+EventEmitter3 x 84,651,552 ops/sec ±0.25% (96 runs sampled)
+Drip x 63,544,980 ops/sec ±0.15% (99 runs sampled)
+fastemitter x 81,156,049 ops/sec ±0.28% (100 runs sampled)
+event-emitter x 35,446,656 ops/sec ±0.11% (102 runs sampled)
+contra/emitter x 3,467,087 ops/sec ±0.46% (96 runs sampled)
+tsee x 24,782,334 ops/sec ±0.42% (98 runs sampled)
+tseep x 1,023,072,386 ops/sec ±0.12% (99 runs sampled)
+emitix x 127,506,385 ops/sec ±0.19% (100 runs sampled)
+mitt x 39,570,173 ops/sec ±0.16% (95 runs sampled)
 Fastest is [ 'tseep' ]
 ```
 
 Starting benchmark hundreds.js
 
 ```
-EventEmitter1 x 671,959 ops/sec ±0.38% (83 runs sampled)
-EventEmitter2 x 596,420 ops/sec ±0.24% (98 runs sampled)
-EventEmitter3 x 737,687 ops/sec ±0.53% (93 runs sampled)
-Drip x 973,422 ops/sec ±0.12% (102 runs sampled)
-fastemitter x 838,675 ops/sec ±0.07% (98 runs sampled)
-event-emitter x 634,274 ops/sec ±0.34% (95 runs sampled)
-contra/emitter x 454,784 ops/sec ±0.11% (98 runs sampled)
-tsee x 1,202,688 ops/sec ±0.14% (101 runs sampled)
-tseep x 2,030,636 ops/sec ±0.11% (98 runs sampled)
-emitix x 1,655,554 ops/sec ±0.14% (94 runs sampled)
+EventEmitter1 x 676,826 ops/sec ±0.56% (93 runs sampled)
+EventEmitter2 x 606,791 ops/sec ±0.28% (99 runs sampled)
+EventEmitter3 x 763,194 ops/sec ±0.26% (99 runs sampled)
+Drip x 964,126 ops/sec ±0.23% (98 runs sampled)
+fastemitter x 841,133 ops/sec ±0.35% (99 runs sampled)
+event-emitter x 614,626 ops/sec ±0.41% (92 runs sampled)
+contra/emitter x 456,909 ops/sec ±0.22% (99 runs sampled)
+tsee x 1,236,166 ops/sec ±0.23% (96 runs sampled)
+tseep x 2,094,643 ops/sec ±0.18% (101 runs sampled)
+emitix x 1,694,758 ops/sec ±0.41% (92 runs sampled)
+mitt x 1,289,137 ops/sec ±0.22% (93 runs sampled)
 Fastest is [ 'tseep' ]
 ```
 
 Starting benchmark listeners.js
 
 ```
-EventEmitter1 x 28,070,656 ops/sec ±0.41% (97 runs sampled)
-EventEmitter3 x 29,278,805 ops/sec ±0.23% (96 runs sampled)
-fastemitter x 12,170,677 ops/sec ±0.29% (95 runs sampled)
-tsee x 28,061,263 ops/sec ±0.48% (101 runs sampled)
-tseep x 71,633,839 ops/sec ±0.17% (101 runs sampled)
+EventEmitter1 x 28,081,176 ops/sec ±0.66% (97 runs sampled)
+EventEmitter3 x 29,015,452 ops/sec ±0.17% (97 runs sampled)
+fastemitter x 12,011,367 ops/sec ±0.34% (90 runs sampled)
+tsee x 27,814,671 ops/sec ±0.30% (100 runs sampled)
+tseep x 69,321,380 ops/sec ±0.63% (98 runs sampled)
 Fastest is [ 'tseep' ]
 ```
 
 Starting benchmark emit.js
 
 ```
-EventEmitter1 x 16,380,408 ops/sec ±0.08% (96 runs sampled)
-EventEmitter2 x 11,644,695 ops/sec ±0.14% (96 runs sampled)
-EventEmitter3 x 14,658,999 ops/sec ±0.21% (91 runs sampled)
-Drip x 15,113,384 ops/sec ±0.13% (97 runs sampled)
-fastemitter x 11,948,484 ops/sec ±0.09% (100 runs sampled)
-event-emitter x 9,799,699 ops/sec ±0.12% (98 runs sampled)
-contra/emitter x 2,944,955 ops/sec ±0.20% (96 runs sampled)
-tsee x 11,632,887 ops/sec ±0.25% (97 runs sampled)
-tseep x 155,663,556 ops/sec ±0.09% (98 runs sampled)
-emitix x 74,624,090 ops/sec ±0.10% (97 runs sampled)
+EventEmitter1 x 16,958,937 ops/sec ±0.16% (100 runs sampled)
+EventEmitter2 x 11,642,166 ops/sec ±0.49% (96 runs sampled)
+EventEmitter3 x 14,894,745 ops/sec ±0.25% (98 runs sampled)
+Drip x 15,241,970 ops/sec ±0.26% (97 runs sampled)
+fastemitter x 12,142,122 ops/sec ±0.30% (94 runs sampled)
+event-emitter x 9,838,595 ops/sec ±0.27% (100 runs sampled)
+contra/emitter x 2,951,014 ops/sec ±0.49% (96 runs sampled)
+tsee x 12,046,633 ops/sec ±0.23% (100 runs sampled)
+tseep x 154,864,959 ops/sec ±0.21% (101 runs sampled)
+emitix x 75,396,374 ops/sec ±0.11% (101 runs sampled)
+mitt x 10,610,306 ops/sec ±0.50% (98 runs sampled)
 Fastest is [ 'tseep' ]
 ```
 
 Starting benchmark init.js
 
 ```
-EventEmitter1 x 59,600,483 ops/sec ±1.45% (93 runs sampled)
-EventEmitter2 x 120,666,715 ops/sec ±2.13% (91 runs sampled)
-EventEmitter3 x 157,990,622 ops/sec ±0.71% (89 runs sampled)
-Drip x 246,405,236 ops/sec ±0.17% (93 runs sampled)
-fastemitter x 57,157,452 ops/sec ±0.18% (94 runs sampled)
-event-emitter x 119,195,656 ops/sec ±0.19% (99 runs sampled)
-contra/emitter x 36,650,773 ops/sec ±0.20% (100 runs sampled)
-tsee x 16,205,342 ops/sec ±0.52% (91 runs sampled)
-tseep x 11,399,297 ops/sec ±0.11% (99 runs sampled)
-emitix x 173,393,081 ops/sec ±0.17% (99 runs sampled)
+EventEmitter1 x 63,081,435 ops/sec ±0.56% (92 runs sampled)
+EventEmitter2 x 129,793,450 ops/sec ±0.41% (94 runs sampled)
+EventEmitter3 x 175,020,935 ops/sec ±0.29% (100 runs sampled)
+Drip x 249,320,013 ops/sec ±0.15% (97 runs sampled)
+fastemitter x 57,452,930 ops/sec ±0.79% (96 runs sampled)
+event-emitter x 118,575,835 ops/sec ±0.14% (98 runs sampled)
+contra/emitter x 37,080,010 ops/sec ±0.56% (92 runs sampled)
+tsee x 16,089,598 ops/sec ±3.00% (94 runs sampled)
+tseep x 11,412,174 ops/sec ±0.18% (93 runs sampled)
+emitix x 174,369,798 ops/sec ±0.29% (97 runs sampled)
+mitt x 33,317,288 ops/sec ±0.38% (95 runs sampled)
 Fastest is [ 'Drip' ]
 ```
 
 Starting benchmark remove-emit.js
 
 ```
-EventEmitter1 x 31,322,388 ops/sec ±0.19% (97 runs sampled)
-EventEmitter2 x 46,662,027 ops/sec ±0.11% (99 runs sampled)
-EventEmitter3 x 74,487,617 ops/sec ±0.29% (97 runs sampled)
-Drip x 61,728,647 ops/sec ±0.07% (101 runs sampled)
-event-emitter x 20,038,318 ops/sec ±0.08% (96 runs sampled)
-contra/emitter x 3,423,116 ops/sec ±0.13% (99 runs sampled)
-tsee x 22,963,010 ops/sec ±0.45% (96 runs sampled)
-tseep x 153,137,336 ops/sec ±0.25% (90 runs sampled)
-emitix x 106,203,779 ops/sec ±0.22% (101 runs sampled)
+EventEmitter1 x 31,254,951 ops/sec ±0.29% (96 runs sampled)
+EventEmitter2 x 46,877,897 ops/sec ±0.14% (98 runs sampled)
+EventEmitter3 x 76,427,109 ops/sec ±0.18% (100 runs sampled)
+Drip x 61,707,577 ops/sec ±0.12% (99 runs sampled)
+event-emitter x 20,905,319 ops/sec ±0.16% (98 runs sampled)
+contra/emitter x 3,422,196 ops/sec ±0.25% (91 runs sampled)
+tsee x 23,317,573 ops/sec ±0.34% (96 runs sampled)
+tseep x 154,473,908 ops/sec ±0.19% (101 runs sampled)
+emitix x 105,707,180 ops/sec ±0.21% (98 runs sampled)
+mitt x 11,004,502 ops/sec ±0.19% (98 runs sampled)
 Fastest is [ 'tseep' ]
 ```
 
 Starting benchmark context.js
 
 ```
-EventEmitter1 x 19,663,903 ops/sec ±0.37% (97 runs sampled)
-EventEmitter2 x 16,095,437 ops/sec ±0.24% (101 runs sampled)
-EventEmitter3 x 20,892,725 ops/sec ±0.42% (85 runs sampled)
-Drip x 16,499,585 ops/sec ±0.76% (98 runs sampled)
-fastemitter x 14,919,749 ops/sec ±1.03% (96 runs sampled)
-event-emitter x 10,821,341 ops/sec ±0.34% (96 runs sampled)
-contra/emitter x 2,992,470 ops/sec ±0.12% (102 runs sampled)
-tsee x 12,364,137 ops/sec ±0.94% (98 runs sampled)
-tseep x 180,556,129 ops/sec ±0.69% (95 runs sampled)
-emitix x 59,630,336 ops/sec ±0.12% (101 runs sampled)
+EventEmitter1 x 19,598,066 ops/sec ±0.28% (94 runs sampled)
+EventEmitter2 x 16,250,831 ops/sec ±0.17% (100 runs sampled)
+EventEmitter3 x 25,596,891 ops/sec ±0.16% (96 runs sampled)
+Drip x 18,577,032 ops/sec ±0.30% (93 runs sampled)
+fastemitter x 15,459,611 ops/sec ±0.17% (97 runs sampled)
+event-emitter x 10,953,428 ops/sec ±0.21% (94 runs sampled)
+contra/emitter x 2,960,098 ops/sec ±0.39% (98 runs sampled)
+tsee x 12,611,985 ops/sec ±0.15% (98 runs sampled)
+tseep x 180,676,467 ops/sec ±0.75% (94 runs sampled)
+emitix x 59,979,784 ops/sec ±0.10% (101 runs sampled)
+mitt x 11,012,468 ops/sec ±0.30% (97 runs sampled)
 Fastest is [ 'tseep' ]
 ```
 
 Starting benchmark once.js
 
 ```
-EventEmitter1 x 16,238,899 ops/sec ±0.50% (96 runs sampled)
-EventEmitter2 x 7,218,988 ops/sec ±0.50% (97 runs sampled)
-EventEmitter3 x 53,794,472 ops/sec ±0.46% (94 runs sampled)
-Drip x 37,330,111 ops/sec ±0.19% (97 runs sampled)
-fastemitter x 20,037,596 ops/sec ±0.13% (99 runs sampled)
-event-emitter x 8,944,866 ops/sec ±0.15% (98 runs sampled)
-contra/emitter x 8,783,143 ops/sec ±0.13% (97 runs sampled)
-tseep x 109,970,747 ops/sec ±0.08% (100 runs sampled)
-emitix x 80,202,579 ops/sec ±1.73% (101 runs sampled)
+EventEmitter1 x 16,279,198 ops/sec ±0.28% (94 runs sampled)
+EventEmitter2 x 7,522,447 ops/sec ±0.30% (97 runs sampled)
+EventEmitter3 x 52,871,196 ops/sec ±0.21% (99 runs sampled)
+Drip x 37,423,419 ops/sec ±0.19% (99 runs sampled)
+fastemitter x 19,917,854 ops/sec ±0.20% (94 runs sampled)
+event-emitter x 8,800,300 ops/sec ±0.21% (100 runs sampled)
+contra/emitter x 8,619,258 ops/sec ±0.34% (94 runs sampled)
+tseep x 108,688,843 ops/sec ±0.15% (98 runs sampled)
+emitix x 78,891,712 ops/sec ±0.21% (100 runs sampled)
 Fastest is [ 'tseep' ]
 ```
 
 Starting benchmark add-remove.js
 
 ```
-EventEmitter1 x 26,853,784 ops/sec ±0.45% (92 runs sampled)
-EventEmitter2 x 9,693,057 ops/sec ±0.39% (99 runs sampled)
-EventEmitter3 x 106,215,447 ops/sec ±0.60% (94 runs sampled)
-Drip x 154,349,842 ops/sec ±0.08% (95 runs sampled)
-fastemitter x 66,863,508 ops/sec ±0.40% (99 runs sampled)
-event-emitter x 16,669,715 ops/sec ±0.59% (88 runs sampled)
-contra/emitter x 27,855,372 ops/sec ±0.21% (99 runs sampled)
-tsee x 29,747,284 ops/sec ±0.25% (90 runs sampled)
-tseep x 70,580,256 ops/sec ±0.23% (100 runs sampled)
-emitix x 128,457,246 ops/sec ±0.34% (91 runs sampled)
+EventEmitter1 x 24,954,602 ops/sec ±0.44% (93 runs sampled)
+EventEmitter2 x 9,580,405 ops/sec ±0.25% (98 runs sampled)
+EventEmitter3 x 113,090,638 ops/sec ±0.32% (92 runs sampled)
+Drip x 152,736,958 ops/sec ±0.25% (98 runs sampled)
+fastemitter x 68,054,208 ops/sec ±0.25% (95 runs sampled)
+event-emitter x 16,275,170 ops/sec ±0.12% (95 runs sampled)
+contra/emitter x 27,783,231 ops/sec ±0.22% (94 runs sampled)
+tsee x 29,669,318 ops/sec ±0.36% (100 runs sampled)
+tseep x 70,905,688 ops/sec ±0.11% (100 runs sampled)
+emitix x 129,807,510 ops/sec ±0.26% (99 runs sampled)
+mitt x 20,512,296 ops/sec ±0.29% (96 runs sampled)
 Fastest is [ 'Drip' ]
 ```

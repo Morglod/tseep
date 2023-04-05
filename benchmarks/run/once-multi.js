@@ -12,6 +12,7 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , TSEE = require('tsee')
   , TSEEP = require('../../lib')
   , Emitix = require('emitix').default
+  , mitt = require('mitt')
 ;
 
 function handle() {
@@ -28,6 +29,7 @@ var ee1 = new EventEmitter1()
   , tseep = new TSEEP.EventEmitter()
   , ee = EE()
   , emitix = new Emitix()
+, mitt_ = mitt()
 ;
 
 (
@@ -65,6 +67,10 @@ var ee1 = new EventEmitter1()
 .add('emitix', function() {
   for (let i = 0; i < 10; ++i) emitix.once('foo', handle);
   emitix.emit('foo');
+})
+.add('mitt', function() {
+  for (let i = 0; i < 10; ++i) mitt_.once('foo', handle);
+  mitt_.emit('foo');
 }).on('cycle', function cycle(e) {
   console.log(e.target.toString());
 }).on('complete', function completed() {

@@ -12,6 +12,7 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , TSEE = require('tsee')
   , TSEEP = require('../../lib')
   , Emitix = require('emitix').default
+  , mitt = require('mitt')
 ;
 
 //
@@ -42,6 +43,8 @@ var emitter;
   emitter = new TSEEP.EventEmitter();
 }).add('emitix', function() {
   emitter = new Emitix();
+}).add('mitt', function() {
+  emitter = mitt();
 }).on('cycle', function cycle(e) {
   console.log(e.target.toString());
 }).on('complete', function completed() {

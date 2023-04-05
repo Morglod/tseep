@@ -12,6 +12,7 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , TSEE = require('tsee')
   , TSEEP = require('../../lib')
   , Emitix = require('emitix').default
+  , mitt = require('mitt')
 ;
 
 var ctx = { foo: 'bar' };
@@ -31,6 +32,7 @@ var ee1 = new EventEmitter1()
   , tseep = new TSEEP.EventEmitter()
   , ee = EE()
   , emitix = new Emitix()
+  , mitt_ = mitt()
 ;
 
 ee3.on('foo', handle, ctx);
@@ -43,6 +45,7 @@ ce.on('foo', handle.bind(ctx));
 tsee.on('foo', handle.bind(ctx));
 tseep.on('foo', handle.bind(ctx));
 emitix.on('foo', handle.bind(ctx));
+mitt_.on('foo', handle.bind(ctx));
 
 (
   new benchmark.Suite()
@@ -96,6 +99,11 @@ emitix.on('foo', handle.bind(ctx));
   emitix.emit('foo', 'bar');
   emitix.emit('foo', 'bar', 'baz');
   emitix.emit('foo', 'bar', 'baz', 'boom');
+}).add('mitt', function() {
+  mitt_.emit('foo');
+  mitt_.emit('foo', 'bar');
+  mitt_.emit('foo', 'bar', 'baz');
+  mitt_.emit('foo', 'bar', 'baz', 'boom');
 }).on('cycle', function cycle(e) {
   console.log(e.target.toString());
 }).on('complete', function completed() {

@@ -8,6 +8,7 @@ var EventEmitter1 = require('events').EventEmitter
   , TSEE = require('tsee')
   , TSEEP = require('../../lib')
   , Emitix = require('emitix').default
+  , mitt = require('mitt')
 ;
 
 var MAX_LISTENERS = Math.pow(2, 32) - 1;
@@ -22,6 +23,7 @@ var ee1 = new EventEmitter1()
   , tseep = new TSEEP.EventEmitter()
   , fe = new FE()
   , emitix = new Emitix()
+, mitt_ = mitt()
 ;
 
 ee1.setMaxListeners(MAX_LISTENERS);

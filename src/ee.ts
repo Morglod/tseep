@@ -130,7 +130,7 @@ function addListener<EventMap extends DefaultEventMap = DefaultEventMap, EventKe
     } else {
         evtmap.push(listener);
         evtmap.growArgsNum(argsNum);
-        if (this.maxListeners !== Infinity && this.maxListeners <= evtmap.length) console.warn(`Maximum event listeners for "${event}" event!`);
+        if (this.maxListeners !== Infinity && this.maxListeners <= evtmap.length) console.warn(`Maximum event listeners for "${String(event)}" event!`);
     }
     return this;
 }
@@ -174,7 +174,7 @@ function prependListener<EventMap extends DefaultEventMap = DefaultEventMap, Eve
     } else {
         evtmap.insert(0, listener);
         evtmap.growArgsNum(argsNum);
-        if (this.maxListeners !== Infinity && this.maxListeners <= evtmap.length) console.warn(`Maximum event listeners for "${event}" event!`);
+        if (this.maxListeners !== Infinity && this.maxListeners <= evtmap.length) console.warn(`Maximum event listeners for "${String(event)}" event!`);
     }
     return this;
 }
@@ -192,7 +192,7 @@ function prependOnceListener<EventMap extends DefaultEventMap = DefaultEventMap,
         // FIXME:
         throw new Error('FIXME');
         // evtmap.unshift(listener);
-        if (this.maxListeners !== Infinity && this.maxListeners <= evtmap.length) console.warn(`Maximum event listeners for "${event}" once event!`);
+        if (this.maxListeners !== Infinity && this.maxListeners <= evtmap.length) console.warn(`Maximum event listeners for "${String(event)}" once event!`);
     }
 
     return this;

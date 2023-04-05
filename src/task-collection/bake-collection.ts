@@ -2,7 +2,7 @@ import { ArgsNum, Args } from 'tsargs';
 
 export const BAKED_EMPTY_FUNC = (function(){});
 
-let FORLOOP_FALLBACK = 20000;
+let FORLOOP_FALLBACK = 6000;
 
 export function bakeCollection<Func extends (...args: any) => void>(
     collection: Func[],

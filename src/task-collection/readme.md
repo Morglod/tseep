@@ -48,6 +48,17 @@ tasks.call(...args);
 
 ## Benchmark
 
+Fancy results
+
+|callbacks count|call time (baked)|call time (for loop)|ratio (vs for loop)|
+|:-|:-|:-|:-|
+|10|0.006|0.06|x10|
+|100|0.1|0.6|x6|
+|500|0.3|4.6|x15|
+|1000|0.9|15.1|x17|
+
+### Detailed
+
 Without fallbacks version
 
 ```
@@ -79,7 +90,7 @@ funcs num       | bake time     | first call time       | call time     | heap c
 ```
 
 
-With fallbacks on 20000 (default)
+With fallbacks on 20000
 
 ```
 array, forI loop:
