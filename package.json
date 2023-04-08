@@ -6,7 +6,8 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest",
-    "build": "tsc"
+    "build": "tsc",
+    "task_collection_dev_benchmark": "node lib/task-collection/tools/benchmark__bake-collection__num-funcs.js"
   },
   "repository": {
     "type": "git",

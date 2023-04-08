@@ -10,7 +10,7 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , EE = require('event-emitter')
   , FE = require('fastemitter')
   , TSEE = require('tsee')
-  , TSEEP = require('../../lib')
+  , TSEEP = require('../../../lib')
   , Emitix = require('emitix').default
   , mitt = require('mitt')
 ;
@@ -31,18 +31,6 @@ var ee1 = new EventEmitter1()
   , emitix = new Emitix()
 , mitt_ = mitt()
 ;
-
-ee.on('foo', handle);
-fe.on('foo', handle);
-ee3.on('foo', handle);
-ee2.on('foo', handle);
-ee1.on('foo', handle);
-drip.on('foo', handle);
-ce.on('foo', handle);
-tsee.on('foo', handle);
-tseep.on('foo', handle);
-emitix.on('foo', handle);
-mitt_.on('foo', handle);
 
 (
   new benchmark.Suite()

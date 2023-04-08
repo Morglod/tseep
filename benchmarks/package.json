@@ -4,7 +4,8 @@
   "description": "eventemitter3 benchmarks",
   "main": "index.js",
   "scripts": {
-    "benchmark": "find run -name '*.js' -exec ./start.sh {} \\;"
+    "benchmark": "find run/ee -name '*.js' -exec ./start.sh {} \\;",
+    "benchmark_misc": "find run/misc -name '*.js' -exec ./start.sh {} \\;"
   },
   "repository": "primus/eventemitter3",
   "author": "Arnout Kazemier",

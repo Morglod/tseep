@@ -10,15 +10,13 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , EE = require('event-emitter')
   , FE = require('fastemitter')
   , TSEE = require('tsee')
-  , TSEEP = require('../../lib')
+  , TSEEP = require('../../../lib')
   , Emitix = require('emitix').default
   , mitt = require('mitt')
 ;
 
-function foo() {
+function handle() {
   if (arguments.length > 100) console.log('damn');
-
-  return 1;
 }
 
 var ee1 = new EventEmitter1()
@@ -32,70 +30,43 @@ var ee1 = new EventEmitter1()
   , ee = EE()
   , emitix = new Emitix()
   , mitt_ = mitt()
-  , j, i;
-
-for (i = 0; i < 10; i++) {
-  for (j = 0; j < 10; j++) {
-    ce.on('event:' + i, foo);
-    ee.on('event:' + i, foo);
-    fe.on('event:' + i, foo);
-    ee1.on('event:' + i, foo);
-    ee2.on('event:' + i, foo);
-    ee3.on('event:' + i, foo);
-    drip.on('event:' + i, foo);
-    tsee.on('event:' + i, foo);
-    tseep.on('event:' + i, foo);
-    emitix.on('event:' + i, foo);
-    mitt_.on('event:' + i, foo);
-  }
-}
+;
 
 (
   new benchmark.Suite()
 ).add('EventEmitter1', function() {
-  for (i = 0; i < 10; i++) {
-    ee1.emit('event:' + i);
-  }
+  ee1.on('foo', handle);
+  ee1.removeListener('foo', handle);
 }).add('EventEmitter2', function() {
-  for (i = 0; i < 10; i++) {
-    ee2.emit('event:' + i);
-  }
+  ee2.on('foo', handle);
+  ee2.removeListener('foo', handle);
 }).add('EventEmitter3', function() {
-  for (i = 0; i < 10; i++) {
-    ee3.emit('event:' + i);
-  }
+  ee3.on('foo', handle);
+  ee3.removeListener('foo', handle);
 }).add('Drip', function() {
-  for (i = 0; i < 10; i++) {
-    drip.emit('event:' + i);
-  }
+  drip.on('foo', handle);
+  drip.removeListener('foo', handle);
 }).add('fastemitter', function() {
-  for (i = 0; i < 10; i++) {
-    fe.emit('event:' + i);
-  }
+  fe.on('foo', handle);
+  fe.removeListener('foo', handle);
 }).add('event-emitter', function() {
-  for (i = 0; i < 10; i++) {
-    ee.emit('event:' + i);
-  }
+  ee.on('foo', handle);
+  ee.off('foo', handle);
 }).add('contra/emitter', function() {
-  for (i = 0; i < 10; i++) {
-    ce.emit('event:' + i);
-  }
+  ce.on('foo', handle);
+  ce.off('foo', handle);
 }).add('tsee', function() {
-  for (i = 0; i < 10; i++) {
-    tsee.emit('event:' + i);
-  }
+  tsee.on('foo', handle);
+  tsee.off('foo', handle);
 }).add('tseep', function() {
-  for (i = 0; i < 10; i++) {
-    tseep.emit('event:' + i);
-  }
+  tseep.on('foo', handle);
+  tseep.off('foo', handle);
 }).add('emitix', function() {
-  for (i = 0; i < 10; i++) {
-    emitix.emit('event:' + i);
-  }
+  emitix.on('foo', handle);
+  emitix.off('foo', handle);
 }).add('mitt', function() {
-  for (i = 0; i < 10; i++) {
-    mitt_.emit('event:' + i);
-  }
+  mitt_.on('foo', handle);
+  mitt_.off('foo', handle);
 }).on('cycle', function cycle(e) {
   console.log(e.target.toString());
 }).on('complete', function completed() {

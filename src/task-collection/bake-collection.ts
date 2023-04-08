@@ -2,7 +2,35 @@ import { ArgsNum, Args } from 'tsargs';
 
 export const BAKED_EMPTY_FUNC = (function(){});
 
-let FORLOOP_FALLBACK = 6000;
+let FORLOOP_FALLBACK = 1500;
+
+function generateArgsDefCode(numArgs: number) {
+    let argsDefCode = '';
+    if (numArgs === 0) return argsDefCode;
+    for (let i = 0; i < numArgs - 1; ++i) {
+        argsDefCode += ('arg' + String(i) + ', ');
+    }
+    argsDefCode += ('arg' + String(numArgs - 1));
+    return argsDefCode;
+}
+
+function generateBodyPartsCode(argsDefCode: string, collectionLength: number) {
+    let funcDefCode = '', funcCallCode = '';
+    for (let i = 0; i < collectionLength; ++i) {
+        funcDefCode += `var f${i} = collection[${i}];\n`;
+        funcCallCode += `f${i}(${argsDefCode})\n`;
+    }
+    return { funcDefCode, funcCallCode };
+}
+
+function generateBodyPartsVariadicCode(collectionLength: number) {
+    let funcDefCode = '', funcCallCode = '';
+    for (let i = 0; i < collectionLength; ++i) {
+        funcDefCode += `var f${i} = collection[${i}];\n`;
+        funcCallCode += `f${i}.apply(undefined, arguments)\n`;
+    }
+    return { funcDefCode, funcCallCode };
+}
 
 export function bakeCollection<Func extends (...args: any) => void>(
     collection: Func[],
@@ -14,9 +42,8 @@ export function bakeCollection<Func extends (...args: any) => void>(
     let funcFactoryCode: string;
 
     if (collection.length < FORLOOP_FALLBACK) {
-        const argsDefCode = Array.from({ length: fixedArgsNum}).map((_, i) => `arg${i}`).join(', ');
-        const funcDefCode = collection.map((_, i) => `var f${i} = collection[${i}];`).join('\n');
-        const funcCallCode = collection.map((_, i) => `f${i}(${argsDefCode})`).join('\n');
+        const argsDefCode = generateArgsDefCode(fixedArgsNum);
+        const { funcDefCode, funcCallCode } = generateBodyPartsCode(argsDefCode, collection.length);
 
         funcFactoryCode = `(function(collection) {
             ${funcDefCode}
@@ -26,7 +53,7 @@ export function bakeCollection<Func extends (...args: any) => void>(
             });
         })`;
     } else {
-        const argsDefCode = Array.from({ length: fixedArgsNum}).map((_, i) => `arg${i}`).join(', ');
+        const argsDefCode = generateArgsDefCode(fixedArgsNum);
 
         // loop unroll
         
@@ -101,9 +128,8 @@ export function bakeCollectionAwait<Func extends (...args: any) => void>(
     let funcFactoryCode: string;
 
     if (collection.length < FORLOOP_FALLBACK) {
-        const argsDefCode = Array.from({ length: fixedArgsNum}).map((_, i) => `arg${i}`).join(', ');
-        const funcDefCode = collection.map((_, i) => `var f${i} = collection[${i}];`).join('\n');
-        const funcCallCode = collection.map((_, i) => `f${i}(${argsDefCode})`).join(', ');
+        const argsDefCode = generateArgsDefCode(fixedArgsNum);
+        const { funcDefCode, funcCallCode } = generateBodyPartsCode(argsDefCode, collection.length);
 
         funcFactoryCode = `(function(collection) {
             ${funcDefCode}
@@ -113,7 +139,7 @@ export function bakeCollectionAwait<Func extends (...args: any) => void>(
             });
         })`;
     } else {
-        const argsDefCode = Array.from({ length: fixedArgsNum}).map((_, i) => `arg${i}`).join(', ');
+        const argsDefCode = generateArgsDefCode(fixedArgsNum);
         funcFactoryCode = `(function(collection) {
             return (function(${argsDefCode}) {
                 var promises = Array(collection.length);
@@ -128,7 +154,6 @@ export function bakeCollectionAwait<Func extends (...args: any) => void>(
     {
         // isolate
         const bakeCollection = undefined;
-        const collection = undefined;
         const fixedArgsNum = undefined;
         const bakeCollectionVariadic = undefined;
         const bakeCollectionAwait = undefined;
@@ -147,8 +172,7 @@ export function bakeCollectionVariadic<Func extends (...args: any) => void>(
     let funcFactoryCode: string;
 
     if (collection.length < FORLOOP_FALLBACK) {
-        const funcDefCode = collection.map((_, i) => `var f${i} = collection[${i}];`).join('\n');
-        const funcCallCode = collection.map((_, i) => `f${i}.apply(undefined, arguments)`).join('\n');
+        const { funcDefCode, funcCallCode } = generateBodyPartsVariadicCode(collection.length); 
 
         funcFactoryCode = `(function(collection) {
             ${funcDefCode}
@@ -170,7 +194,6 @@ export function bakeCollectionVariadic<Func extends (...args: any) => void>(
     {
         // isolate
         const bakeCollection = undefined;
-        const collection = undefined;
         const fixedArgsNum = undefined;
         const bakeCollectionVariadic = undefined;
         const bakeCollectionAwait = undefined;

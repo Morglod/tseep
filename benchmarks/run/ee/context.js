@@ -10,7 +10,7 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , EE = require('event-emitter')
   , FE = require('fastemitter')
   , TSEE = require('tsee')
-  , TSEEP = require('../../lib')
+  , TSEEP = require('../../../lib')
   , Emitix = require('emitix').default
   , mitt = require('mitt')
 ;

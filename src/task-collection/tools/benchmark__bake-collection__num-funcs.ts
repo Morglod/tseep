@@ -1,6 +1,6 @@
 import { bakeCollection } from "../bake-collection";
 
-const steps = [ 10, 100, 500, 1000, 10000, 15000, 25000, 35000, 50000 ];
+const steps = [ 10, 100, 500, 1000, 1500, 2000, 3000, 4000, 5000, 10000  ];
 const callTimes = 20;
 
 function makeFuncsArray(size: number): ((x: number, y: number) => number)[] {
@@ -24,7 +24,7 @@ function makeFuncsArray(size: number): ((x: number, y: number) => number)[] {
 
 // Warm up memory
 
-makeFuncsArray(steps[steps.length - 1]);
+const predefined_funcs = makeFuncsArray(steps[steps.length - 1]);
 
 
 let _prevHeapUsed = process.memoryUsage().heapUsed;
@@ -39,10 +39,12 @@ function nextHeapUsed() {
 
 function benchForI() {
     console.log('\narray, forI loop:');
-    console.log(`funcs num\t| bake time \t| first call time\t| call time\t| heap change\n`);
+    console.log(`funcs num\t| bake time \t| first call time\t| call time\t| heap change\t| total time\n`);
     
     for (let stepi = 0; stepi < steps.length; stepi++) {
-        const funcs = makeFuncsArray(steps[stepi]);
+        // global.gc();
+
+        const funcs = predefined_funcs.slice(0, steps[stepi]);
     
         const bakeStart = process.hrtime();
         const baked = (x: number, y: number) => {
@@ -50,48 +52,60 @@ function benchForI() {
                 funcs[jj](x, y);
             }
         };
-        const bakeEnd = process.hrtime(bakeStart);
+        const bakeTime = process.hrtime(bakeStart);
+
+        // global.gc();
     
         const firstCallStart = process.hrtime();
         baked(10, 5);
-        const firstCallEnd = process.hrtime(firstCallStart);
+        const firstCallTime = process.hrtime(firstCallStart);
         baked(10, 5);
         
         const callStart = process.hrtime();
         for (let i = 0; i < callTimes; ++i) {
             baked(10, 5);
         }
-        const callEnd = process.hrtime(callStart);
+        const callTime = process.hrtime(callStart);
+
+        const totalTime = (bakeTime[1] / 1000000) + (callTime[1] / 1000000);
     
-        console.log(`${steps[stepi]}\t\t| ${bakeEnd[1] / 1000000} ms\t| ${firstCallEnd[1] / 1000000} ms\t\t| ${callEnd[1] / 1000000} ms\t| ${(nextHeapUsed() / 1024 / 1024).toFixed(3)} mb`);
+        console.log(`${steps[stepi]}\t\t| ${bakeTime[1] / 1000000} ms\t| ${firstCallTime[1] / 1000000} ms\t\t| ${callTime[1] / 1000000} ms\t| ${(nextHeapUsed() / 1024 / 1024).toFixed(3)} mb\t|${totalTime}ms`);
     }
 }
 
 function benchBake() {
     console.log('\nbakeCollection:');
-    console.log(`funcs num\t| bake time \t| first call time\t| call time\t| heap change\n`);
+    console.log(`funcs num\t| bake time \t| first call time\t| call time\t| heap change\t| total time\n`);
     
     for (let stepi = 0; stepi < steps.length; stepi++) {
-        const funcs = makeFuncsArray(steps[stepi]);
+        // global.gc();
+
+        const funcs = predefined_funcs.slice(0, steps[stepi]);
     
         const bakeStart = process.hrtime();
         const baked = bakeCollection(funcs, 2);
-        const bakeEnd = process.hrtime(bakeStart);
+        const bakeTime = process.hrtime(bakeStart);
     
+        // global.gc();
+
         const firstCallStart = process.hrtime();
         baked(10, 5);
-        const firstCallEnd = process.hrtime(firstCallStart);
+        const firstCallTime = process.hrtime(firstCallStart);
         baked(10, 5);
     
         const callStart = process.hrtime();
         for (let i = 0; i < callTimes; ++i) {
             baked(10, 5);
         }
-        const callEnd = process.hrtime(callStart);
+        const callTime = process.hrtime(callStart);
     
-        console.log(`${steps[stepi]}\t\t| ${bakeEnd[1] / 1000000} ms\t| ${firstCallEnd[1] / 1000000} ms\t\t| ${callEnd[1] / 1000000} ms\t| ${(nextHeapUsed() / 1024 / 1024).toFixed(3)} mb`);
+        const totalTime = (bakeTime[1] / 1000000) + (callTime[1] / 1000000);
+
+        console.log(`${steps[stepi]}\t\t| ${bakeTime[1] / 1000000} ms\t| ${firstCallTime[1] / 1000000} ms\t\t| ${callTime[1] / 1000000} ms\t| ${(nextHeapUsed() / 1024 / 1024).toFixed(3)} mb\t|${totalTime}ms`);
     }
 }
 
+// global.gc();
 benchForI();
+// global.gc();
 benchBake();

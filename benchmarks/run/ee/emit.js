@@ -10,12 +10,12 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , EE = require('event-emitter')
   , FE = require('fastemitter')
   , TSEE = require('tsee')
-  , TSEEP = require('../../lib')
+  , TSEEP = require('../../../lib')
   , Emitix = require('emitix').default
   , mitt = require('mitt')
 ;
 
-function handle(a,b,c,d,e,f,g,h,i) {
+function handle(a,b,c,d) {
   if (arguments.length > 100) console.log('damn');
 }
 
@@ -47,49 +47,60 @@ mitt_.on('foo', handle);
 (
   new benchmark.Suite()
 ).add('EventEmitter1', function() {
+  ee1.emit('foo');
+  ee1.emit('foo', 'bar');
+  ee1.emit('foo', 'bar', 'baz');
   ee1.emit('foo', 'bar', 'baz', 'boom');
-  ee1.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
-  ee1.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
 }).add('EventEmitter2', function() {
+  ee2.emit('foo');
+  ee2.emit('foo', 'bar');
+  ee2.emit('foo', 'bar', 'baz');
   ee2.emit('foo', 'bar', 'baz', 'boom');
-  ee2.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
-  ee2.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
 }).add('EventEmitter3', function() {
+  ee3.emit('foo');
+  ee3.emit('foo', 'bar');
+  ee3.emit('foo', 'bar', 'baz');
   ee3.emit('foo', 'bar', 'baz', 'boom');
-  ee3.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
-  ee3.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
 }).add('Drip', function() {
+  drip.emit('foo');
+  drip.emit('foo', 'bar');
+  drip.emit('foo', 'bar', 'baz');
   drip.emit('foo', 'bar', 'baz', 'boom');
-  drip.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
-  drip.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
 }).add('fastemitter', function() {
+  fe.emit('foo');
+  fe.emit('foo', 'bar');
+  fe.emit('foo', 'bar', 'baz');
   fe.emit('foo', 'bar', 'baz', 'boom');
-  fe.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
-  fe.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
 }).add('event-emitter', function() {
+  ee.emit('foo');
+  ee.emit('foo', 'bar');
+  ee.emit('foo', 'bar', 'baz');
   ee.emit('foo', 'bar', 'baz', 'boom');
-  ee.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
-  ee.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
 }).add('contra/emitter', function() {
+  ce.emit('foo');
+  ce.emit('foo', 'bar');
+  ce.emit('foo', 'bar', 'baz');
   ce.emit('foo', 'bar', 'baz', 'boom');
-  ce.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
-  ce.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
 }).add('tsee', function() {
+  tsee.emit('foo');
+  tsee.emit('foo', 'bar');
+  tsee.emit('foo', 'bar', 'baz');
   tsee.emit('foo', 'bar', 'baz', 'boom');
-  tsee.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
-  tsee.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
 }).add('tseep', function() {
+  tseep.emit('foo');
+  tseep.emit('foo', 'bar');
+  tseep.emit('foo', 'bar', 'baz');
   tseep.emit('foo', 'bar', 'baz', 'boom');
-  tseep.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
-  tseep.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
 }).add('emitix', function() {
+  emitix.emit('foo');
+  emitix.emit('foo', 'bar');
+  emitix.emit('foo', 'bar', 'baz');
   emitix.emit('foo', 'bar', 'baz', 'boom');
-  emitix.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
-  emitix.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
 }).add('mitt', function() {
+  mitt_.emit('foo');
+  mitt_.emit('foo', 'bar');
+  mitt_.emit('foo', 'bar', 'baz');
   mitt_.emit('foo', 'bar', 'baz', 'boom');
-  mitt_.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
-  mitt_.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
 }).on('cycle', function cycle(e) {
   console.log(e.target.toString());
 }).on('complete', function completed() {
