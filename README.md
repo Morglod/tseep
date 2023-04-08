@@ -65,6 +65,41 @@ events.emit("foo", 123, "hello world");
 
 !! **`__proto__`** event name is restricted (type guard exists) !!
 
+<details>
+<summary>
+Full EventEmitter class api
+</summary>
+
+```ts
+
+// Listener = (...args: any[]) => Promise<any>|void
+// EventMap extends { [event in (string|symbol)]: Listener }
+
+class EventEmitter<EventMap> {
+    maxListeners: number;
+    _eventsCount: number;
+
+    emit(event: EventKey, ...args: ArgsN<EventMap[EventKey]>): boolean;
+    on(event: EventKey, listener: EventMap[EventKey]): this;
+    once(event: EventKey, listener: EventMap[EventKey]): this;
+    addListener(event: EventKey, listener: EventMap[EventKey], argsNum?: ArgsNum<EventMap[EventKey]>): this;
+    removeListener(event: EventKey, listener: EventMap[EventKey]): this;
+    hasListeners(event: EventKey): boolean;
+    prependListener(event: EventKey, listener: EventMap[EventKey]): this;
+    prependOnceListener(event: EventKey, listener: EventMap[EventKey]): this;
+    off(event: EventKey, listener: EventMap[EventKey]): this;
+    removeAllListeners(event?: EventKey): this;
+    setMaxListeners(n: number): this;
+    getMaxListeners(): number;
+    listeners(event: EventKey): EventMap[EventKey][];
+    rawListeners(event: EventKey): EventMap[EventKey][];
+    eventNames(): Array<string | symbol>;
+    listenerCount(type: EventKey): number;
+}
+```
+
+</details>
+
 ## License
 
 MIT
