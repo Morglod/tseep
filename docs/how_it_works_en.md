@@ -1,5 +1,8 @@
 # event emitter
 
+PS Uses `eval` for runtime codegenerations;  
+don't be afraid of it, all JS engines use it lol.
+
 ## Switching Implementations
 
 When calling emit, we also need to handle once listeners (which may not exist).

@@ -1,4 +1,5 @@
 [![NPM Version](https://badge.fury.io/js/tseep.svg?style=flat)](https://www.npmjs.com/package/tseep)
+[![GitHub stars](https://img.shields.io/github/stars/Morglod/tseep.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/Morglod/tseep/)
 
 # tseep
 
@@ -12,9 +13,6 @@ Up to **x12** faster than `eventemitter3` in terms of "classic api event emitter
 -   Fully implements `NodeJS.EventEmitter` type & standart, provides interface
 -   Worlds fastest pure-js `EventEmitter`
 -   Fully tested with eventemitter3 tests
-
-PS Uses `eval` for runtime codegenerations;  
-don't be afraid of it, all JS engines use it lol.
 
 [how it works](./docs/how_it_works_en.md)
 
@@ -65,19 +63,13 @@ events.emit("foo", 123, "hello world");
 
 !! **`__proto__`** event name is restricted (type guard exists) !!
 
-<details>
-<summary>
-Full EventEmitter class api
-</summary>
-
 ```ts
-
 // Listener = (...args: any[]) => Promise<any>|void
 // EventMap extends { [event in (string|symbol)]: Listener }
 
 class EventEmitter<EventMap> {
-    maxListeners: number;
-    _eventsCount: number;
+    readonly maxListeners: number;
+    readonly _eventsCount: number;
 
     emit(event: EventKey, ...args: ArgsN<EventMap[EventKey]>): boolean;
     on(event: EventKey, listener: EventMap[EventKey]): this;
@@ -97,8 +89,6 @@ class EventEmitter<EventMap> {
     listenerCount(type: EventKey): number;
 }
 ```
-
-</details>
 
 ## License
 
