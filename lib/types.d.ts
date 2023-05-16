@@ -1,7 +1,7 @@
 /// <reference types="node" />
 import { ArgsN } from 'tsargs';
-export declare type Listener = (...args: any[]) => Promise<any> | void;
-export declare type DefaultEventMap = {
+export type Listener = (...args: any[]) => Promise<any> | void;
+export type DefaultEventMap = {
     [event in (string | symbol)]: Listener;
 } & {
     /**

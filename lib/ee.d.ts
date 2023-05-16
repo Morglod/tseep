@@ -11,7 +11,7 @@ export declare class EventEmitter<EventMap extends DefaultEventMap = DefaultEven
     };
     _symbolKeys: Set<symbol>;
     maxListeners: number;
-    readonly _eventsCount: number;
+    get _eventsCount(): number;
     emit: <EventKey extends keyof EventMap>(event: EventKey, ...args: ArgsN<EventMap[EventKey]>) => boolean;
     on: <EventKey extends keyof EventMap = string>(event: EventKey, listener: EventMap[EventKey]) => this;
     once: <EventKey extends keyof EventMap = string>(event: EventKey, listener: EventMap[EventKey]) => this;
