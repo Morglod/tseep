@@ -34,8 +34,3 @@ export interface IEventEmitter<EventMap extends DefaultEventMap = DefaultEventMa
     eventNames(): Array<string | symbol>;
     listenerCount<EventKey extends keyof EventMap = string>(type: EventKey): number;
 }
-
-/** cast type of any event emitter to typed event emitter */
-export function asTypedEventEmitter<EventMap extends DefaultEventMap, X extends NodeJS.EventEmitter>(x: X): IEventEmitter<EventMap> {
-    return x as any;
-}

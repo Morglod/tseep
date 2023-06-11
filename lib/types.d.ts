@@ -1,4 +1,3 @@
-/// <reference types="node" />
 export type Listener = (...args: any[]) => Promise<any> | void;
 export type DefaultEventMap = {
     [event in (string | symbol)]: Listener;
@@ -26,5 +25,3 @@ export interface IEventEmitter<EventMap extends DefaultEventMap = DefaultEventMa
     eventNames(): Array<string | symbol>;
     listenerCount<EventKey extends keyof EventMap = string>(type: EventKey): number;
 }
-/** cast type of any event emitter to typed event emitter */
-export declare function asTypedEventEmitter<EventMap extends DefaultEventMap, X extends NodeJS.EventEmitter>(x: X): IEventEmitter<EventMap>;
