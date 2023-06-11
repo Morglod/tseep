@@ -13,6 +13,7 @@ Up to **x12** faster than `eventemitter3` in terms of "classic api event emitter
 -   Fully implements `NodeJS.EventEmitter` type & standart, provides interface
 -   Worlds fastest pure-js `EventEmitter`
 -   Fully tested with eventemitter3 tests
+-   No external deps
 
 [how it works](./docs/how_it_works_en.md)
 

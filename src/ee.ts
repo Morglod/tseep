@@ -1,7 +1,6 @@
 import { DefaultEventMap, IEventEmitter } from './index';
-import { ArgsN, ArgsNum } from 'tsargs';
 import { TaskCollection, _fast_remove_single } from './task-collection';
-import { nullObj } from './utils';
+import { nullObj, ArgsNum } from './utils';
 
 function emit(this: EventEmitter, event: string, a: any, b: any, c: any, d: any, e: any) {
     const ev = this.events[event];
@@ -73,7 +72,7 @@ export class EventEmitter<EventMap extends DefaultEventMap = DefaultEventMap> im
         return this.eventNames().length;
     }
 
-    emit: <EventKey extends keyof EventMap>(event: EventKey, ...args: ArgsN<EventMap[EventKey]>) => boolean;
+    emit: <EventKey extends keyof EventMap>(event: EventKey, ...args: Parameters<EventMap[EventKey]>) => boolean;
     on: <EventKey extends keyof EventMap = string>(event: EventKey, listener: EventMap[EventKey]) => this;
     once: <EventKey extends keyof EventMap = string>(event: EventKey, listener: EventMap[EventKey]) => this;
     addListener: <EventKey extends keyof EventMap = string>(event: EventKey, listener: EventMap[EventKey], argsNum?: ArgsNum<EventMap[EventKey]>) => this;

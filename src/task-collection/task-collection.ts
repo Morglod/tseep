@@ -1,6 +1,6 @@
-import { ArgsNum, Args } from 'tsargs';
 import { NoReadonly } from './utils';
 import { bakeCollection, bakeCollectionAwait, BAKED_EMPTY_FUNC } from './bake-collection';
+import { ArgsNum } from '../utils';
 
 function push_norebuild<Func extends (...args: any) => void>(this: TaskCollection<Func>, a: Func, b?: Func /*, ...func: Func[] */) {
     const len = this.length;
@@ -219,7 +219,7 @@ export class TaskCollection<
     readonly growArgsNum: typeof growArgsNum;
     setAutoRebuild: typeof setAutoRebuild;
 
-    call: (...args: Args<Func>) => (AwaitTasks extends true ? Promise<void> : void) = BAKED_EMPTY_FUNC as any;
+    call: (...args: Parameters<Func>) => (AwaitTasks extends true ? Promise<void> : void) = BAKED_EMPTY_FUNC as any;
 
     rebuild: () => void;
 

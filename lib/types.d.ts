@@ -1,5 +1,4 @@
 /// <reference types="node" />
-import { ArgsN } from 'tsargs';
 export type Listener = (...args: any[]) => Promise<any> | void;
 export type DefaultEventMap = {
     [event in (string | symbol)]: Listener;
@@ -11,7 +10,7 @@ export type DefaultEventMap = {
     __proto__?: never;
 };
 export interface IEventEmitter<EventMap extends DefaultEventMap = DefaultEventMap> {
-    emit<EventKey extends keyof EventMap>(event: EventKey, ...args: ArgsN<EventMap[EventKey]>): boolean;
+    emit<EventKey extends keyof EventMap>(event: EventKey, ...args: Parameters<EventMap[EventKey]>): boolean;
     on<EventKey extends keyof EventMap = string>(event: EventKey, listener: EventMap[EventKey]): this;
     once<EventKey extends keyof EventMap = string>(event: EventKey, listener: EventMap[EventKey]): this;
     addListener<EventKey extends keyof EventMap = string>(event: EventKey, listener: EventMap[EventKey]): this;

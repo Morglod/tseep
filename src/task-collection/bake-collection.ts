@@ -1,4 +1,4 @@
-import { ArgsNum, Args } from 'tsargs';
+import { ArgsNum } from "../utils";
 
 export const BAKED_EMPTY_FUNC = (function(){});
 
@@ -35,7 +35,7 @@ function generateBodyPartsVariadicCode(collectionLength: number) {
 export function bakeCollection<Func extends (...args: any) => void>(
     collection: Func[],
     fixedArgsNum: ArgsNum<Func>,
-): (...args: Args<Func>) => void {
+): (...args: Parameters<Func>) => void {
     if (collection.length === 0) return BAKED_EMPTY_FUNC;
     else if (collection.length === 1) return collection[0];
 
@@ -121,7 +121,7 @@ export function bakeCollection<Func extends (...args: any) => void>(
 export function bakeCollectionAwait<Func extends (...args: any) => void>(
     collection: Func[],
     fixedArgsNum: ArgsNum<Func>,
-): (...args: Args<Func>) => Promise<void> {
+): (...args: Parameters<Func>) => Promise<void> {
     if (collection.length === 0) return BAKED_EMPTY_FUNC as any;
     else if (collection.length === 1) return collection[0] as any;
     
@@ -165,7 +165,7 @@ export function bakeCollectionAwait<Func extends (...args: any) => void>(
 
 export function bakeCollectionVariadic<Func extends (...args: any) => void>(
     collection: Func[],
-): (...args: Args<Func>) => void {
+): (...args: Parameters<Func>) => void {
     if (collection.length === 0) return BAKED_EMPTY_FUNC;
     else if (collection.length === 1) return collection[0];
 

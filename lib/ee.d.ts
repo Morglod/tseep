@@ -1,6 +1,6 @@
 import { DefaultEventMap, IEventEmitter } from './index';
-import { ArgsN, ArgsNum } from 'tsargs';
 import { TaskCollection } from './task-collection';
+import { ArgsNum } from './utils';
 /** Implemented event emitter */
 export declare class EventEmitter<EventMap extends DefaultEventMap = DefaultEventMap> implements IEventEmitter<EventMap> {
     events: {
@@ -12,7 +12,7 @@ export declare class EventEmitter<EventMap extends DefaultEventMap = DefaultEven
     _symbolKeys: Set<symbol>;
     maxListeners: number;
     get _eventsCount(): number;
-    emit: <EventKey extends keyof EventMap>(event: EventKey, ...args: ArgsN<EventMap[EventKey]>) => boolean;
+    emit: <EventKey extends keyof EventMap>(event: EventKey, ...args: Parameters<EventMap[EventKey]>) => boolean;
     on: <EventKey extends keyof EventMap = string>(event: EventKey, listener: EventMap[EventKey]) => this;
     once: <EventKey extends keyof EventMap = string>(event: EventKey, listener: EventMap[EventKey]) => this;
     addListener: <EventKey extends keyof EventMap = string>(event: EventKey, listener: EventMap[EventKey], argsNum?: ArgsNum<EventMap[EventKey]>) => this;

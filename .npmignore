@@ -8,3 +8,7 @@ coverage
 lib/__tests__
 lib/opt-playgroud.*
 lib/example.*
+./.gitignore
+./README.md
+docs
+lib/task-collection/tools

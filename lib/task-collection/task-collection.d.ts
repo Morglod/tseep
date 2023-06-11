@@ -1,4 +1,4 @@
-import { ArgsNum, Args } from 'tsargs';
+import { ArgsNum } from '../utils';
 export declare function _fast_remove_single(arr: any[], index: number): void;
 export declare class TaskCollection<Func extends (...args: any) => void, AwaitTasks extends true | false = false> {
     readonly awaitTasks: AwaitTasks;
@@ -13,7 +13,7 @@ export declare class TaskCollection<Func extends (...args: any) => void, AwaitTa
     autoRebuild: boolean;
     readonly growArgsNum: typeof growArgsNum;
     setAutoRebuild: typeof setAutoRebuild;
-    call: (...args: Args<Func>) => (AwaitTasks extends true ? Promise<void> : void);
+    call: (...args: Parameters<Func>) => (AwaitTasks extends true ? Promise<void> : void);
     rebuild: () => void;
     push: (...func: Func[]) => void;
     /** remove last matched task from tasks */
