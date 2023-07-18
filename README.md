@@ -56,6 +56,12 @@ const events = new EventEmitter<{
 events.emit("foo", 123, "hello world");
 ```
 
+or browser minified version (use through global TSEEP object):
+
+```
+<script src="https://unpkg.com/tseep/tseep.min.js"></script>
+```
+
 ## Api
 
 `EventEmitter<T>` where `T` extends `{ [eventName]: Call signature }`.
