@@ -1,5 +1,5 @@
 [![NPM Version](https://badge.fury.io/js/tseep.svg?style=flat)](https://www.npmjs.com/package/tseep)
-[![GitHub stars](https://img.shields.io/github/stars/Morglod/tseep.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/Morglod/tseep/)
+[![GitHub stars](https://img.shields.io/github/stars/Morglod/tseep.svg?style=social&label=Star)](https://GitHub.com/Morglod/tseep/)
 
 # tseep
 
