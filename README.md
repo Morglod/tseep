@@ -64,6 +64,11 @@ events.emit("foo", 123, "hello world");
 
 !! **`__proto__`** event name is restricted (type guard exists) !!
 
+By default listeners are not bound to EventEmitter, so you may get some problems around inheritance.  
+First of all, better use incapsulation. Its faster, safer, clear.  
+Other variant is to use addListenerBound/removeListenerBound.  
+Its 2-3x slower for add/remove operation but than you will have proper 'this' context inside listener.
+
 ```ts
 // Listener = (...args: any[]) => Promise<any>|void
 // EventMap extends { [event in (string|symbol)]: Listener }
@@ -88,6 +93,11 @@ class EventEmitter<EventMap> {
     rawListeners(event: EventKey): EventMap[EventKey][];
     eventNames(): Array<string | symbol>;
     listenerCount(type: EventKey): number;
+
+    // special methods that are a bit slower than addListener/removeListener
+    // but they binds listeners to current EventEmitter or custom object
+    addListenerBound(event: EventKey, listener: EventMap[EventKey], bindTo?: any = this, argsNum?: ArgsNum<EventMap[EventKey]>): this;
+    removeListenerBound(event: EventKey, listener: EventMap[EventKey]): this;
 }
 ```
 

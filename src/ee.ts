@@ -64,6 +64,8 @@ export class EventEmitter<EventMap extends DefaultEventMap = DefaultEventMap> im
         [eventName in keyof EventMap]?: (EventMap[eventName][]) | EventMap[eventName]
     } = nullObj();
 
+    boundFuncs: undefined | Map<Function, Function>;
+
     _symbolKeys: Set<symbol> = new Set;
 
     maxListeners: number = Infinity;
@@ -88,6 +90,9 @@ export class EventEmitter<EventMap extends DefaultEventMap = DefaultEventMap> im
     rawListeners: <EventKey extends keyof EventMap = string>(event: EventKey) => EventMap[EventKey][];
     eventNames: () => Array<string | symbol>;
     listenerCount: <EventKey extends keyof EventMap = string>(type: EventKey) => number;
+
+    addListenerBound: <EventKey extends keyof EventMap = string>(event: EventKey, listener: EventMap[EventKey], bindTo?: any, argsNum?: ArgsNum<EventMap[EventKey]>) => this;
+    removeListenerBound: <EventKey extends keyof EventMap = string>(event: EventKey, listener: EventMap[EventKey]) => this;
 }
 
 
@@ -153,6 +158,25 @@ function removeListener<EventMap extends DefaultEventMap = DefaultEventMap, Even
         }
     }
     return this;
+}
+
+function addListenerBound<EventMap extends DefaultEventMap = DefaultEventMap, EventKey extends keyof EventMap = string>(
+    this: EventEmitter<EventMap>,
+    event: EventKey,
+    listener: EventMap[EventKey],
+    bindTo = this,
+    argsNum: ArgsNum<EventMap[EventKey]> = listener.length as any,
+): EventEmitter<EventMap> {
+    if (!this.boundFuncs) this.boundFuncs = new Map;
+    const bound = listener.bind(bindTo);
+    this.boundFuncs.set(listener, bound);
+    return this.addListener(event, bound, argsNum);
+}
+
+function removeListenerBound<EventMap extends DefaultEventMap = DefaultEventMap, EventKey extends keyof EventMap = string>(this: EventEmitter<EventMap>,event: EventKey, listener: EventMap[EventKey]): EventEmitter<EventMap> {
+    const bound = this.boundFuncs?.get(listener);
+    this.boundFuncs?.delete(listener);
+    return this.removeListener(event, bound as any);
 }
 
 function hasListeners<EventMap extends DefaultEventMap = DefaultEventMap, EventKey extends keyof EventMap = string>(this: EventEmitter<EventMap>,event: EventKey) {
@@ -259,6 +283,8 @@ EventEmitter.prototype.on = addListener;
 EventEmitter.prototype.once = once;
 EventEmitter.prototype.addListener = addListener;
 EventEmitter.prototype.removeListener = removeListener;
+EventEmitter.prototype.addListenerBound = addListenerBound;
+EventEmitter.prototype.removeListenerBound = removeListenerBound;
 EventEmitter.prototype.hasListeners = hasListeners as any;
 EventEmitter.prototype.prependListener = prependListener;
 EventEmitter.prototype.prependOnceListener = prependOnceListener;

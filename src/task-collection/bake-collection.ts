@@ -113,7 +113,7 @@ export function bakeCollection<Func extends (...args: any) => void>(
         const bakeCollectionVariadic = undefined;
         const bakeCollectionAwait = undefined;
 
-        const funcFactory = eval(funcFactoryCode);
+        const funcFactory = eval(funcFactoryCode) as Function;
         return funcFactory(collection);
     }
 }
@@ -158,7 +158,7 @@ export function bakeCollectionAwait<Func extends (...args: any) => void>(
         const bakeCollectionVariadic = undefined;
         const bakeCollectionAwait = undefined;
 
-        const funcFactory = eval(funcFactoryCode);
+        const funcFactory = eval(funcFactoryCode) as Function;
         return funcFactory(collection);
     }
 }
@@ -198,7 +198,7 @@ export function bakeCollectionVariadic<Func extends (...args: any) => void>(
         const bakeCollectionVariadic = undefined;
         const bakeCollectionAwait = undefined;
 
-        const funcFactory = eval(funcFactoryCode);
+        const funcFactory = eval(funcFactoryCode) as Function;
         return funcFactory(collection);
     }
 }

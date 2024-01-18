@@ -9,6 +9,7 @@ export declare class EventEmitter<EventMap extends DefaultEventMap = DefaultEven
     onceEvents: {
         [eventName in keyof EventMap]?: (EventMap[eventName][]) | EventMap[eventName];
     };
+    boundFuncs: undefined | Map<Function, Function>;
     _symbolKeys: Set<symbol>;
     maxListeners: number;
     get _eventsCount(): number;
@@ -28,4 +29,6 @@ export declare class EventEmitter<EventMap extends DefaultEventMap = DefaultEven
     rawListeners: <EventKey extends keyof EventMap = string>(event: EventKey) => EventMap[EventKey][];
     eventNames: () => Array<string | symbol>;
     listenerCount: <EventKey extends keyof EventMap = string>(type: EventKey) => number;
+    addListenerBound: <EventKey extends keyof EventMap = string>(event: EventKey, listener: EventMap[EventKey], bindTo?: any, argsNum?: ArgsNum<EventMap[EventKey]>) => this;
+    removeListenerBound: <EventKey extends keyof EventMap = string>(event: EventKey, listener: EventMap[EventKey]) => this;
 }
