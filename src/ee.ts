@@ -207,15 +207,18 @@ function prependOnceListener<EventMap extends DefaultEventMap = DefaultEventMap,
         this.emit = emitHasOnce as any;
     }
 
-    let evtmap = this.onceEvents[event];
-    if (!evtmap || typeof evtmap !== 'object') {
-        evtmap = this.onceEvents[event] = [ listener ];
+    const evtmap = this.onceEvents[event];
+    if (!evtmap) {
+        this.onceEvents[event] = [ listener ];
+        if (typeof event === 'symbol') this._symbolKeys.add(event);
+    } else if (typeof evtmap !== 'object') {
+        this.onceEvents[event] = [ listener, evtmap as any ];
         if (typeof event === 'symbol') this._symbolKeys.add(event);
     } else {
-        // FIXME:
-        throw new Error('FIXME');
-        // evtmap.unshift(listener);
-        if (this.maxListeners !== Infinity && this.maxListeners <= evtmap.length) console.warn(`Maximum event listeners for "${String(event)}" once event!`);
+        evtmap.unshift(listener);
+        if (this.maxListeners !== Infinity && this.maxListeners <= evtmap.length) {
+            console.warn(`Maximum event listeners for "${String(event)}" once event!`);
+        }
     }
 
     return this;
