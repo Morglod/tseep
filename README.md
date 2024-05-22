@@ -14,6 +14,7 @@ Up to **x12** faster than `eventemitter3` in terms of "classic api event emitter
 -   Worlds fastest pure-js `EventEmitter`
 -   Fully tested with eventemitter3 tests
 -   No external deps
+-   Only 381 bytes size in real app (brotlied)
 
 [how it works](./docs/how_it_works_en.md)
 
