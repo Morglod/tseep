@@ -14,3 +14,4 @@ docs
 lib/task-collection/tools
 .vscode
 jest.config.js
+package-lock.json
