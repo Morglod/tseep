@@ -74,7 +74,8 @@ import { EventEmitter } from "tseep/lib/fallback"; // or with autofallback
 // same api
 ```
 
-"tseep/lib/fallback" may bundle both versions which may result in bigger app bundle size.
+"tseep/lib/fallback" may bundle both versions which may result in bigger app bundle size.  
+Fun fact: brotlied bundled fallback version is less in size than just ee
 
 ## Api
 
