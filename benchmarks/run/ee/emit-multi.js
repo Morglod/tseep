@@ -11,8 +11,10 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , FE = require('fastemitter')
   , TSEE = require('tsee')
   , TSEEP = require('../../../lib')
+  , TSEEPSafe = require('../../../lib/ee-safe')
   , Emitix = require('emitix').default
   , mitt = require('mitt')
+  // , Emittery = require('emittery').default
 ;
 
 function handle(a,b,c,d,e,f,g,h,i) {
@@ -27,9 +29,11 @@ var ee1 = new EventEmitter1()
   , ce = CE()
   , tsee = new TSEE.EventEmitter()
   , tseep = new TSEEP.EventEmitter()
+  , tseepSafe = new TSEEPSafe.EventEmitter()
   , ee = EE()
   , emitix = new Emitix()
-, mitt_ = mitt()
+  , mitt_ = mitt()
+  // , emittery = new Emittery()
 ;
 
 ee.on('foo', handle);
@@ -41,56 +45,80 @@ drip.on('foo', handle);
 ce.on('foo', handle);
 tsee.on('foo', handle);
 tseep.on('foo', handle);
+tseepSafe.on('foo', handle);
 emitix.on('foo', handle);
 mitt_.on('foo', handle);
+// emittery.on('foo', handle);
 
 (
   new benchmark.Suite()
-).add('EventEmitter1', function() {
+)
+.add('EventEmitter1', function() {
   ee1.emit('foo', 'bar', 'baz', 'boom');
   ee1.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
   ee1.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
-}).add('EventEmitter2', function() {
+})
+.add('EventEmitter2', function() {
   ee2.emit('foo', 'bar', 'baz', 'boom');
   ee2.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
   ee2.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
-}).add('EventEmitter3', function() {
+})
+.add('EventEmitter3', function() {
   ee3.emit('foo', 'bar', 'baz', 'boom');
   ee3.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
   ee3.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
-}).add('Drip', function() {
+})
+.add('Drip', function() {
   drip.emit('foo', 'bar', 'baz', 'boom');
   drip.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
   drip.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
-}).add('fastemitter', function() {
+})
+.add('fastemitter', function() {
   fe.emit('foo', 'bar', 'baz', 'boom');
   fe.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
   fe.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
-}).add('event-emitter', function() {
+})
+.add('event-emitter', function() {
   ee.emit('foo', 'bar', 'baz', 'boom');
   ee.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
   ee.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
-}).add('contra/emitter', function() {
+})
+.add('contra/emitter', function() {
   ce.emit('foo', 'bar', 'baz', 'boom');
   ce.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
   ce.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
-}).add('tsee', function() {
+})
+.add('tsee', function() {
   tsee.emit('foo', 'bar', 'baz', 'boom');
   tsee.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
   tsee.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
-}).add('tseep', function() {
+})
+.add('tseep', function() {
   tseep.emit('foo', 'bar', 'baz', 'boom');
   tseep.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
   tseep.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
-}).add('emitix', function() {
+})
+.add('tseep safe', function() {
+  tseepSafe.emit('foo', 'bar', 'baz', 'boom');
+  tseepSafe.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
+  tseepSafe.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
+})
+.add('emitix', function() {
   emitix.emit('foo', 'bar', 'baz', 'boom');
   emitix.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
   emitix.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
-}).add('mitt', function() {
+})
+.add('mitt', function() {
   mitt_.emit('foo', 'bar', 'baz', 'boom');
   mitt_.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
   mitt_.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
-}).on('cycle', function cycle(e) {
+})
+// .add('emittery', function() {
+//   emittery.emit('foo', 'bar', 'baz', 'boom');
+//   emittery.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom');
+//   emittery.emit('foo', 'bar', 'baz', 'boom', 'foo', 'bar', 'baz', 'boom', 123123);
+// })
+.on('cycle', function cycle(e) {
   console.log(e.target.toString());
 }).on('complete', function completed() {
   console.log('Fastest is %s', this.filter('fastest').map('name'));

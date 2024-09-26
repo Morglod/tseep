@@ -7,8 +7,10 @@ var EventEmitter1 = require('events').EventEmitter
   , FE = require('fastemitter')
   , TSEE = require('tsee')
   , TSEEP = require('../../../lib')
+  , TSEEPSafe = require('../../../lib/ee-safe')
   , Emitix = require('emitix').default
   , mitt = require('mitt')
+  // , Emittery = require('emittery').default
 ;
 
 var MAX_LISTENERS = Math.pow(2, 32) - 1;
@@ -21,15 +23,19 @@ var ee1 = new EventEmitter1()
   , ee3 = new EventEmitter3()
   , tsee = new TSEE.EventEmitter()
   , tseep = new TSEEP.EventEmitter()
+  , tseepSafe = new TSEEPSafe.EventEmitter()
   , fe = new FE()
   , emitix = new Emitix()
-, mitt_ = mitt()
+  , mitt_ = mitt()
+  // , emittery = new Emittery()
 ;
 
 ee1.setMaxListeners(MAX_LISTENERS);
 fe.setMaxListeners(MAX_LISTENERS);
 tsee.setMaxListeners(MAX_LISTENERS);
 tseep.setMaxListeners(MAX_LISTENERS);
+tseepSafe.setMaxListeners(MAX_LISTENERS);
+// emittery.
 // emitix.setMaxListeners(MAX_LISTENERS);
 
 for (var i = 0; i < 25; i++) {
@@ -38,6 +44,8 @@ for (var i = 0; i < 25; i++) {
   fe.on('event', handle);
   tsee.on('event', handle);
   tseep.on('event', handle);
+  tseepSafe.on('event', handle);
+  // emittery.on('event', handle);
   // emitix.on('event', handle);
 }
 
@@ -62,7 +70,12 @@ for (var i = 0; i < 25; i++) {
   tsee.listeners('event');
 }).add('tseep', function() {
   tseep.listeners('event');
+}).add('tseep safe', function() {
+  tseepSafe.listeners('event');
 })
+// .add('emittery', function() {
+//   emittery.listenerCount('event');
+// })
 // .add('emitix', function() {
 //   emitix.listeners('event');
 // })

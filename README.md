@@ -15,6 +15,7 @@ Up to **x12** faster than `eventemitter3` in terms of "classic api event emitter
 -   Fully tested with eventemitter3 tests
 -   No external deps
 -   Only 381 bytes size in real app (brotlied)
+-   Safe version without eval implemented
 
 [how it works](./docs/how_it_works_en.md)
 
@@ -56,6 +57,16 @@ const events = new EventEmitter<{
 // foo's arguments is fully type checked
 events.emit("foo", 123, "hello world");
 ```
+
+### Use safe version without evals
+
+```ts
+import { EventEmitter } from "tseep/lib/ee-safe";
+import { EventEmitter } from "tseep/lib/fallback"; // or with autofallback
+
+// same api
+```
+
 
 ## Api
 

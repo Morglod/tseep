@@ -10,8 +10,10 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , EE = require('event-emitter')
   , TSEE = require('tsee')
   , TSEEP = require('../../../lib')
+  , TSEEPSafe = require('../../../lib/ee-safe')
   , Emitix = require('emitix').default
   , mitt = require('mitt')
+  // , Emittery = require('emittery').default
 ;
 
 function handle() {
@@ -25,12 +27,14 @@ var ee1 = new EventEmitter1()
   , ce = CE()
   , tsee = new TSEE.EventEmitter()
   , tseep = new TSEEP.EventEmitter()
+  , tseepSafe = new TSEEPSafe.EventEmitter()
   , ee = EE()
   , emitix = new Emitix()
-, mitt_ = mitt()
+  , mitt_ = mitt()
+  // , emittery = new Emittery()
 ;
 
-[ee1, ee2, ee3, drip, ee, ce, tsee, tseep, emitix, mitt_].forEach(function ohai(emitter) {
+[ee1, ee2, ee3, drip, ee, ce, tsee, tseep, tseepSafe, emitix, mitt_, /* emittery */].forEach(function ohai(emitter) {
   emitter.on('foo', handle);
   if (emitter.removeListener) emitter.removeListener('foo', handle);
   else if (emitter.off) emitter.off('foo', handle);
@@ -94,6 +98,12 @@ var ee1 = new EventEmitter1()
   tseep.emit('foo', 'bar', 'baz');
   tseep.emit('foo', 'bar', 'baz', 'boom');
 })
+.add('tseep safe', function() {
+  tseepSafe.emit('foo');
+  tseepSafe.emit('foo', 'bar');
+  tseepSafe.emit('foo', 'bar', 'baz');
+  tseepSafe.emit('foo', 'bar', 'baz', 'boom');
+})
 .add('emitix', function() {
   emitix.emit('foo');
   emitix.emit('foo', 'bar');
@@ -106,6 +116,12 @@ var ee1 = new EventEmitter1()
   mitt_.emit('foo', 'bar', 'baz');
   mitt_.emit('foo', 'bar', 'baz', 'boom');
 })
+// .add('emittery', function() {
+//   emittery.emit('foo');
+//   emittery.emit('foo', 'bar');
+//   emittery.emit('foo', 'bar', 'baz');
+//   emittery.emit('foo', 'bar', 'baz', 'boom');
+// })
 .on('cycle', function cycle(e) {
   console.log(e.target.toString());
 }).on('complete', function completed() {

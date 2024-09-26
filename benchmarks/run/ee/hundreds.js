@@ -11,8 +11,10 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , FE = require('fastemitter')
   , TSEE = require('tsee')
   , TSEEP = require('../../../lib')
+  , TSEEPSafe = require('../../../lib/ee-safe')
   , Emitix = require('emitix').default
   , mitt = require('mitt')
+  // , Emittery = require('emittery').default
 ;
 
 function foo() {
@@ -29,9 +31,11 @@ var ee1 = new EventEmitter1()
   , ce = CE()
   , tsee = new TSEE.EventEmitter()
   , tseep = new TSEEP.EventEmitter()
+  , tseepSafe = new TSEEPSafe.EventEmitter()
   , ee = EE()
   , emitix = new Emitix()
   , mitt_ = mitt()
+  // , emittery = new Emittery()
   , j, i;
 
 for (i = 0; i < 10; i++) {
@@ -45,8 +49,10 @@ for (i = 0; i < 10; i++) {
     drip.on('event:' + i, foo);
     tsee.on('event:' + i, foo);
     tseep.on('event:' + i, foo);
+    tseepSafe.on('event:' + i, foo);
     emitix.on('event:' + i, foo);
     mitt_.on('event:' + i, foo);
+    // emittery.on('event:' + i, foo);
   }
 }
 
@@ -88,6 +94,10 @@ for (i = 0; i < 10; i++) {
   for (i = 0; i < 10; i++) {
     tseep.emit('event:' + i);
   }
+}).add('tseep safe', function() {
+  for (i = 0; i < 10; i++) {
+    tseepSafe.emit('event:' + i);
+  }
 }).add('emitix', function() {
   for (i = 0; i < 10; i++) {
     emitix.emit('event:' + i);
@@ -96,7 +106,13 @@ for (i = 0; i < 10; i++) {
   for (i = 0; i < 10; i++) {
     mitt_.emit('event:' + i);
   }
-}).on('cycle', function cycle(e) {
+})
+// .add('emittery', function() {
+//   for (i = 0; i < 10; i++) {
+//     emittery.emit('event:' + i);
+//   }
+// })
+.on('cycle', function cycle(e) {
   console.log(e.target.toString());
 }).on('complete', function completed() {
   console.log('Fastest is %s', this.filter('fastest').map('name'));

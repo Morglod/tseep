@@ -11,8 +11,10 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , FE = require('fastemitter')
   , TSEE = require('tsee')
   , TSEEP = require('../../../lib')
+  , TSEEPSafe = require('../../../lib/ee-safe')
   , Emitix = require('emitix').default
   , mitt = require('mitt')
+  // , Emittery = require('emittery').default
 ;
 
 function handle() {
@@ -27,9 +29,11 @@ var ee1 = new EventEmitter1()
   , ce = CE()
   , tsee = new TSEE.EventEmitter()
   , tseep = new TSEEP.EventEmitter()
+  , tseepSafe = new TSEEPSafe.EventEmitter()
   , ee = EE()
   , emitix = new Emitix()
-, mitt_ = mitt()
+  , mitt_ = mitt()
+  // , emittery = new Emittery()
 ;
 
 (
@@ -56,6 +60,9 @@ var ee1 = new EventEmitter1()
 .add('tseep', function() {
   tseep.once('foo', handle).emit('foo');
 })
+.add('tseep safe', function() {
+  tseepSafe.once('foo', handle).emit('foo');
+})
 .add('emitix', function() {
   emitix.once('foo', handle);
   emitix.emit('foo');
@@ -63,6 +70,10 @@ var ee1 = new EventEmitter1()
 // .add('mitt', function() {
 //   mitt_.once('foo', handle);
 //   mitt_.emit('foo');
+// })
+// .add('emittery', function() {
+//   emittery.once('foo', handle);
+//   emittery.emit('foo');
 // })
 .on('cycle', function cycle(e) {
   console.log(e.target.toString());

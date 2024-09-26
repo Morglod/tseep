@@ -1,4 +1,4 @@
-import { EventEmitter } from '..';
+import { EventEmitter } from '../ee-safe';
 import assume from 'assume';
 
 describe('EventEmitter', function tests() {
@@ -118,7 +118,7 @@ describe('EventEmitter', function tests() {
           done();
         }.bind(context)).emit('foo', 'bar', 1, 2, 3, 4, 5, 6, 7, 8, 9, 0);
       });
-
+    
       it('emit multiple arguments ok addListener', function (done) {
         var context = { bar: 'baz' }
           , e = new EventEmitter();
@@ -134,10 +134,10 @@ describe('EventEmitter', function tests() {
           assume(a7).equals(7);
           assume(a8).equals(8);
           assume(a9).equals(9);
-          assume(a10).equals(10);
+          assume(a10).equals(0);
   
           done();
-        }.bind(context)).emit('foo', 'bar', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        }.bind(context)).emit('foo', 'bar', 1, 2, 3, 4, 5, 6, 7, 8, 9, 0);
       });
 
       it('emit multiple arguments ok once', function (done) {
@@ -160,7 +160,7 @@ describe('EventEmitter', function tests() {
           done();
         }.bind(context)).emit('foo', 'bar', 1, 2, 3, 4, 5, 6, 7, 8, 9, 0);
       });
-    
+
       it('emits with this', function (done) {
         var e = new EventEmitter();
   
@@ -174,21 +174,21 @@ describe('EventEmitter', function tests() {
         e.emit('foo', 'bar');
       });
   
-      // it('can emit the function with multiple arguments', function (done) {
-      //   let e = new EventEmitter();
+      // it('can emit the function with multiple arguments', function () {
+      //   var e = new EventEmitter();
   
-      //   for (let j = 0; j < 100; j++) {
-      //     const args = [];
-      //     for (let i = 0; i < j; i++) {
-      //       args.push(j);
-      //     }
+      //   for (var i = 0; i < 100; i++) {
+      //     (function (j) {
+      //       for (var i = 0, args = []; i < j; i++) {
+      //         args.push(j);
+      //       }
   
-      //     e.once('args', function () {
-      //       assume(arguments.length).equals(args.length);
-      //       done();
-      //     });
-
-      //     e.emit.apply(e, ['args'].concat(args));
+      //       e.once('args', function () {
+      //         assume(arguments.length).equals(args.length);
+      //       });
+  
+      //       e.emit.apply(e, ['args'].concat(args));
+      //     })(i);
       //   }
       // });
   

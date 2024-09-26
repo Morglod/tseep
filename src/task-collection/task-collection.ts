@@ -1,4 +1,4 @@
-import { NoReadonly } from './utils';
+import { _fast_remove_single, NoReadonly } from './utils';
 import { bakeCollection, bakeCollectionAwait, BAKED_EMPTY_FUNC } from './bake-collection';
 import { ArgsNum } from '../utils';
 
@@ -67,13 +67,6 @@ function push_rebuild<Func extends (...args: any) => void>(this: TaskCollection<
 
     if (this.firstEmitBuildStrategy) this.call = rebuild_on_first_call;
     else this.rebuild();
-}
-
-export function _fast_remove_single(arr: any[], index: number) {
-    if (index === -1) return;
-    if (index === 0) arr.shift();
-    else if (index === arr.length - 1) arr.length = arr.length - 1;
-    else arr.splice(index, 1);
 }
 
 function removeLast_norebuild<Func extends (...args: any) => void>(this: TaskCollection<Func>, a: Func) {

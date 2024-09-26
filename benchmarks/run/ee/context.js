@@ -11,8 +11,10 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , FE = require('fastemitter')
   , TSEE = require('tsee')
   , TSEEP = require('../../../lib')
+  , TSEEPSafe = require('../../../lib/ee-safe')
   , Emitix = require('emitix').default
   , mitt = require('mitt')
+  // , Emittery = require('emittery').default
 ;
 
 var ctx = { foo: 'bar' };
@@ -30,9 +32,11 @@ var ee1 = new EventEmitter1()
   , ce = CE()
   , tsee = new TSEE.EventEmitter()
   , tseep = new TSEEP.EventEmitter()
+  , tseepSafe = new TSEEPSafe.EventEmitter()
   , ee = EE()
   , emitix = new Emitix()
   , mitt_ = mitt()
+  // , emittery = new Emittery()
 ;
 
 ee3.on('foo', handle, ctx);
@@ -44,8 +48,10 @@ fe.on('foo', handle.bind(ctx));
 ce.on('foo', handle.bind(ctx));
 tsee.on('foo', handle.bind(ctx));
 tseep.on('foo', handle.bind(ctx));
+tseepSafe.on('foo', handle.bind(ctx));
 emitix.on('foo', handle.bind(ctx));
 mitt_.on('foo', handle.bind(ctx));
+// emittery.on('foo', handle.bind(ctx));
 
 (
   new benchmark.Suite()
@@ -94,6 +100,11 @@ mitt_.on('foo', handle.bind(ctx));
   tseep.emit('foo', 'bar');
   tseep.emit('foo', 'bar', 'baz');
   tseep.emit('foo', 'bar', 'baz', 'boom');
+}).add('tseep safe', function() {
+  tseepSafe.emit('foo');
+  tseepSafe.emit('foo', 'bar');
+  tseepSafe.emit('foo', 'bar', 'baz');
+  tseepSafe.emit('foo', 'bar', 'baz', 'boom');
 }).add('emitix', function() {
   emitix.emit('foo');
   emitix.emit('foo', 'bar');
@@ -104,7 +115,14 @@ mitt_.on('foo', handle.bind(ctx));
   mitt_.emit('foo', 'bar');
   mitt_.emit('foo', 'bar', 'baz');
   mitt_.emit('foo', 'bar', 'baz', 'boom');
-}).on('cycle', function cycle(e) {
+})
+// .add('emittery', function() {
+//   emittery.emit('foo');
+//   emittery.emit('foo', 'bar');
+//   emittery.emit('foo', 'bar', 'baz');
+//   emittery.emit('foo', 'bar', 'baz', 'boom');
+// })
+.on('cycle', function cycle(e) {
   console.log(e.target.toString());
 }).on('complete', function completed() {
   console.log('Fastest is %s', this.filter('fastest').map('name'));

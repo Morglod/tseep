@@ -11,8 +11,11 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , FE = require('fastemitter')
   , TSEE = require('tsee')
   , TSEEP = require('../../../lib')
+  , TSEEPSafe = require('../../../lib/ee-safe')
+  // , TSEEP = require('tseep')
   , Emitix = require('emitix').default
   , mitt = require('mitt')
+  // , Emittery = require('emittery').default
 ;
 
 function foo(a,b,c,d) {
@@ -41,9 +44,11 @@ var ee1 = new EventEmitter1()
   , ce = CE()
   , tsee = new TSEE.EventEmitter()
   , tseep = new TSEEP.EventEmitter()
+  , tseepSafe = new TSEEPSafe.EventEmitter()
   , ee = EE()
   , eix = new Emitix()
   , mitt_ = mitt()
+  // , emittery = new Emittery()
 ;
 
 ce.on('foo', foo).on('foo', bar).on('foo', baz);
@@ -55,9 +60,12 @@ ee2.on('foo', foo).on('foo', bar).on('foo', baz);
 ee1.on('foo', foo).on('foo', bar).on('foo', baz);
 eix.on('foo', foo); eix.on('foo', bar); eix.on('foo', baz);
 mitt_.on('foo', foo); mitt_.on('foo', bar); mitt_.on('foo', baz);
+// emittery.on('foo', foo); emittery.on('foo', bar); emittery.on('foo', baz);
 
 tsee.on('foo', foo).on('foo', bar).on('foo', baz);
 tseep.on('foo', foo).on('foo', bar).on('foo', baz);
+tseepSafe.on('foo', foo).on('foo', bar).on('foo', baz);
+// tseep.addListenerBound('foo', foo).addListenerBound('foo', bar).addListenerBound('foo', baz);
 
 //
 // Drip is omitted as it throws an error.
@@ -66,62 +74,86 @@ tseep.on('foo', foo).on('foo', bar).on('foo', baz);
 
 (
   new benchmark.Suite()
-).add('EventEmitter1', function() {
+)
+.add('EventEmitter1', function() {
   ee1.emit('foo');
   ee1.emit('foo', 'bar');
   ee1.emit('foo', 'bar', 'baz');
   ee1.emit('foo', 'bar', 'baz', 'boom');
-}).add('EventEmitter2', function() {
+})
+.add('EventEmitter2', function() {
   ee2.emit('foo');
   ee2.emit('foo', 'bar');
   ee2.emit('foo', 'bar', 'baz');
   ee2.emit('foo', 'bar', 'baz', 'boom');
-}).add('EventEmitter3', function() {
+})
+.add('EventEmitter3', function() {
   ee3.emit('foo');
   ee3.emit('foo', 'bar');
   ee3.emit('foo', 'bar', 'baz');
   ee3.emit('foo', 'bar', 'baz', 'boom');
-}).add('Drip', function() {
+})
+.add('Drip', function() {
   drip.emit('foo');
   drip.emit('foo', 'bar');
   drip.emit('foo', 'bar', 'baz');
   drip.emit('foo', 'bar', 'baz', 'boom');
-}).add('fastemitter', function() {
+})
+.add('fastemitter', function() {
   fe.emit('foo');
   fe.emit('foo', 'bar');
   fe.emit('foo', 'bar', 'baz');
   fe.emit('foo', 'bar', 'baz', 'boom');
-}).add('event-emitter', function() {
+})
+.add('event-emitter', function() {
   ee.emit('foo');
   ee.emit('foo', 'bar');
   ee.emit('foo', 'bar', 'baz');
   ee.emit('foo', 'bar', 'baz', 'boom');
-}).add('contra/emitter', function() {
+})
+.add('contra/emitter', function() {
   ce.emit('foo');
   ce.emit('foo', 'bar');
   ce.emit('foo', 'bar', 'baz');
   ce.emit('foo', 'bar', 'baz', 'boom');
-}).add('tsee', function() {
+})
+.add('tsee', function() {
   tsee.emit('foo');
   tsee.emit('foo', 'bar');
   tsee.emit('foo', 'bar', 'baz');
   tsee.emit('foo', 'bar', 'baz', 'boom');
-}).add('tseep', function() {
+})
+.add('tseep', function() {
   tseep.emit('foo');
   tseep.emit('foo', 'bar');
   tseep.emit('foo', 'bar', 'baz');
   tseep.emit('foo', 'bar', 'baz', 'boom');
-}).add('emitix', function() {
+})
+.add('tseep safe', function() {
+  tseepSafe.emit('foo');
+  tseepSafe.emit('foo', 'bar');
+  tseepSafe.emit('foo', 'bar', 'baz');
+  tseepSafe.emit('foo', 'bar', 'baz', 'boom');
+})
+.add('emitix', function() {
   eix.emit('foo');
   eix.emit('foo', 'bar');
   eix.emit('foo', 'bar', 'baz');
   eix.emit('foo', 'bar', 'baz', 'boom');
-}).add('mitt', function() {
+})
+.add('mitt', function() {
   mitt_.emit('foo');
   mitt_.emit('foo', 'bar');
   mitt_.emit('foo', 'bar', 'baz');
   mitt_.emit('foo', 'bar', 'baz', 'boom');
-}).on('cycle', function cycle(e) {
+})
+// .add('emittery', function() {
+//   emittery.emit('foo');
+//   emittery.emit('foo', 'bar');
+//   emittery.emit('foo', 'bar', 'baz');
+//   emittery.emit('foo', 'bar', 'baz', 'boom');
+// })
+.on('cycle', function cycle(e) {
   console.log(e.target.toString());
 }).on('complete', function completed() {
   console.log('Fastest is %s', this.filter('fastest').map('name'));

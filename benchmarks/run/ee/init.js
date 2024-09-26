@@ -11,8 +11,10 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , FE = require('fastemitter')
   , TSEE = require('tsee')
   , TSEEP = require('../../../lib')
+  , TSEEPSafe = require('../../../lib/ee-safe')
   , Emitix = require('emitix').default
   , mitt = require('mitt')
+  // , Emittery = require('emittery').default
 ;
 
 //
@@ -41,11 +43,17 @@ var emitter;
   emitter = new TSEE.EventEmitter();
 }).add('tseep', function() {
   emitter = new TSEEP.EventEmitter();
+}).add('tseep safe', function() {
+  emitter = new TSEEPSafe.EventEmitter();
 }).add('emitix', function() {
   emitter = new Emitix();
 }).add('mitt', function() {
   emitter = mitt();
-}).on('cycle', function cycle(e) {
+})
+// .add('emittery', function() {
+//   emitter = new Emittery();
+// })
+.on('cycle', function cycle(e) {
   console.log(e.target.toString());
 }).on('complete', function completed() {
   console.log('Fastest is %s', this.filter('fastest').map('name'));

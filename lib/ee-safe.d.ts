@@ -1,10 +1,9 @@
 import type { DefaultEventMap, IEventEmitter } from './types';
-import { TaskCollection } from './task-collection';
 import { ArgsNum } from './utils';
 /** Implemented event emitter */
 export declare class EventEmitter<EventMap extends DefaultEventMap = DefaultEventMap> implements IEventEmitter<EventMap> {
     events: {
-        [eventName in keyof EventMap]?: TaskCollection<EventMap[eventName]>;
+        [eventName in keyof EventMap]?: EventMap[eventName][];
     };
     onceEvents: {
         [eventName in keyof EventMap]?: (EventMap[eventName][]) | EventMap[eventName];

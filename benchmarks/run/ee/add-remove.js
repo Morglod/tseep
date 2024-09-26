@@ -10,9 +10,12 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2
   , EE = require('event-emitter')
   , FE = require('fastemitter')
   , TSEE = require('tsee')
+  // , TSEEP = require('tseep')
   , TSEEP = require('../../../lib')
+  , TseepSafe = require('../../../lib/ee-safe')
   , Emitix = require('emitix').default
   , mitt = require('mitt')
+  // , Emittery = require('emittery').default
 ;
 
 function handle() {
@@ -27,9 +30,11 @@ var ee1 = new EventEmitter1()
   , ce = CE()
   , tsee = new TSEE.EventEmitter()
   , tseep = new TSEEP.EventEmitter()
+  , tseepSafe = new TseepSafe.EventEmitter()
   , ee = EE()
   , emitix = new Emitix()
   , mitt_ = mitt()
+  // , emittery = new Emittery()
 ;
 
 (
@@ -61,13 +66,24 @@ var ee1 = new EventEmitter1()
 }).add('tseep', function() {
   tseep.on('foo', handle);
   tseep.off('foo', handle);
+}).add('tseep bound', function() {
+  tseep.addListenerBound('foo', handle);
+  tseep.removeListenerBound('foo', handle);
+}).add('tseep safe', function() {
+  tseepSafe.on('foo', handle);
+  tseepSafe.off('foo', handle);
 }).add('emitix', function() {
   emitix.on('foo', handle);
   emitix.off('foo', handle);
 }).add('mitt', function() {
   mitt_.on('foo', handle);
   mitt_.off('foo', handle);
-}).on('cycle', function cycle(e) {
+})
+// .add('emittery', function() {
+//   emittery.on('foo', handle);
+//   emittery.off('foo', handle);
+// })
+.on('cycle', function cycle(e) {
   console.log(e.target.toString());
 }).on('complete', function completed() {
   console.log('Fastest is %s', this.filter('fastest').map('name'));

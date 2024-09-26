@@ -3,3 +3,4 @@ export type NoReadonly<T extends {
 }> = {
     -readonly [X in keyof T]: T[X];
 };
+export declare function _fast_remove_single(arr: any[], index: number): void;

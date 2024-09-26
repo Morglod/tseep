@@ -1,5 +1,4 @@
 import { ArgsNum } from '../utils';
-export declare function _fast_remove_single(arr: any[], index: number): void;
 export declare class TaskCollection<Func extends (...args: any) => void, AwaitTasks extends true | false = false> {
     readonly awaitTasks: AwaitTasks;
     constructor(argsNum: ArgsNum<Func>, autoRebuild?: boolean, initialTasks?: (Func[]) | Func | null, awaitTasks?: AwaitTasks);
