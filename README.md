@@ -15,7 +15,7 @@ Up to **x12** faster than `eventemitter3` in terms of "classic api event emitter
 -   Fully tested with eventemitter3 tests
 -   No external deps
 -   Only 381 bytes size in real app (brotlied)
--   Safe version without eval implemented
+-   No eval implemented
 
 [how it works](./docs/how_it_works_en.md)
 
@@ -23,15 +23,18 @@ Up to **x12** faster than `eventemitter3` in terms of "classic api event emitter
 
 emit-multiple-listeners:
 ```
-tseep x            40,569,711 ops/sec  <---
-EventEmitter1 x     4,498,223 ops/sec
-EventEmitter2 x     4,536,296 ops/sec
-EventEmitter3 x     5,852,395 ops/sec
-fastemitter x       6,127,215 ops/sec
-event-emitter x     3,449,595 ops/sec
-contra/emitter x    2,186,002 ops/sec
-tsee x              5,231,167 ops/sec
-emitix x            6,549,983 ops/sec 
+tseep               89,030,882 ops/sec
+tseep no-eval       15,235,353 ops/sec
+emitix              6,201,874 ops/sec
+fastemitter         5,981,406 ops/sec
+EventEmitter3       5,698,255 ops/sec
+tsee                5,163,550 ops/sec
+EventEmitter2       4,588,433 ops/sec
+EventEmitter1       4,437,743 ops/sec
+mitt                3,587,734 ops/sec
+event-emitter       3,508,490 ops/sec
+contra/emitter      2,183,943 ops/sec
+
 Fastest is [ 'tseep' ]
 ```
 
@@ -58,15 +61,20 @@ const events = new EventEmitter<{
 events.emit("foo", 123, "hello world");
 ```
 
-### Use safe version without evals
+### Use no-eval version
+
+There is no user code evaluated so its complete safe to use with-eval version.  
+But in some cases (eg chrome's extensions), you just cant use it.  
+For this cases there is no-eval version:
 
 ```ts
-import { EventEmitter } from "tseep/lib/ee-safe";
+import { EventEmitter } from "tseep/lib/ee-safe"; // no-eval version
 import { EventEmitter } from "tseep/lib/fallback"; // or with autofallback
 
 // same api
 ```
 
+"tseep/lib/fallback" may bundle both versions which may result in bigger app bundle size.
 
 ## Api
 
