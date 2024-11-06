@@ -122,6 +122,10 @@ class EventEmitter<EventMap> {
 }
 ```
 
+## Support this project
+
+[Boosty](https://boosty.to/morglod)
+
 ## License
 
 MIT
