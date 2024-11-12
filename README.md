@@ -3,7 +3,7 @@
 
 # tseep
 
-Because there are N fastest event emitters. And we are fastest (feb 2023) 😏.
+Because there are N fastest event emitters. And we are fastest (November 2024) 😏.
 
 Up to **x12** faster than `eventemitter3` in terms of "classic api event emitters" (currently fastest for not classic too).
 
@@ -77,18 +77,34 @@ import { EventEmitter } from "tseep/lib/fallback"; // or with autofallback
 "tseep/lib/fallback" may bundle both versions which may result in bigger app bundle size.  
 Fun fact: brotlied bundled fallback version is less in size than just ee
 
-## Api
+## Known issues
 
-`EventEmitter<T>` where `T` extends `{ [eventName]: Call signature }`.
-
-`EventEmitter.emit`'s args is fully typed based on events map.
+#### __proto__ event name
 
 !! **`__proto__`** event name is restricted (type guard exists) !!
+
+#### context binding
 
 By default listeners are not bound to EventEmitter, so you may get some problems around inheritance.  
 First of all, better use incapsulation. Its faster, safer, clear.  
 Other variant is to use addListenerBound/removeListenerBound.  
 Its 2-3x slower for add/remove operation but than you will have proper 'this' context inside listener.
+
+#### args length
+
+tseep tries to evade spread operator and pass arguments directly.  
+It will always pass at least 5 arguments, filling non existing args as undefined.  
+So if you use spread operator inside listener for arguments, you may have more args than you passed.  
+It's a tradeoff for optimization.
+
+Better use 5 or less arguments for listener, because js engine will optimize it and pass directly through registers.  
+(actually 6 arguments, but 1 argument is used as event name)
+
+## Api
+
+`EventEmitter<T>` where `T` extends `{ [eventName]: Call signature }`.
+
+`EventEmitter.emit`'s args is fully typed based on events map.
 
 ```ts
 // Listener = (...args: any[]) => Promise<any>|void
